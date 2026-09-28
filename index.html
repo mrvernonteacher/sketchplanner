@@ -220,3 +220,954 @@
       margin-bottom: 6px;
       font-weight: 700;
     }
+
+    .diagnostic-col:first-child h4 { color: #b91c1c; }
+    .diagnostic-col:last-child h4 { color: #15803d; }
+
+    .diagnostic-col ul {
+      padding-left: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* Table styling */
+    .planning-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 18px;
+      font-size: 13px;
+    }
+
+    .planning-table th, 
+    .planning-table td {
+      border: 1px solid var(--neutral-border);
+      padding: 7px 10px;
+      text-align: left;
+    }
+
+    .planning-table th {
+      background: var(--neutral-bg);
+      font-weight: 700;
+      color: var(--text-dark);
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .planning-table select, 
+    .planning-table input[type="text"] {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid var(--neutral-border);
+      border-radius: 4px;
+      font-size: 12.5px;
+      background: white;
+    }
+
+    .planning-table .table-row-input {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 8px;
+    }
+
+    /* Checklist Section */
+    .checklist-section {
+      background: var(--neutral-bg);
+      border: 1px solid var(--neutral-border);
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 18px;
+    }
+
+    .checklist-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--walton-blue-dark);
+      margin-bottom: 8px;
+    }
+
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 14px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .checklist-item.met {
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    .check-marker {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .checklist-item.met .check-marker {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .checklist-item.unmet .check-marker {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    /* Action bar */
+    .action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .controls-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .stem-check-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--walton-blue-dark);
+      padding: 6px 10px;
+      border-radius: 4px;
+      background: var(--neutral-bg);
+      border: 1px solid var(--neutral-border);
+      user-select: none;
+    }
+
+    .stem-check-label input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--walton-blue);
+      cursor: pointer;
+    }
+
+    .btn {
+      padding: 8px 15px;
+      font-size: 12.5px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease;
+    }
+
+    .btn-primary { background: var(--walton-blue); color: white; }
+    .btn-primary:hover { background: var(--walton-blue-dark); }
+    .btn-outline { background: white; border: 1px solid var(--neutral-border); color: var(--text-dark); }
+    .btn-outline:hover { background: #f8fafc; }
+
+    /* PDF Reference Drawer */
+    .pdf-accordion {
+      border: 1px solid var(--neutral-border);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .pdf-accordion summary {
+      padding: 10px 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--walton-blue-dark);
+      cursor: pointer;
+      background: var(--neutral-bg);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pdf-accordion summary::-webkit-details-marker { display: none; }
+    .pdf-accordion summary::after {
+      content: "▼";
+      font-size: 10px;
+      transition: transform 0.2s ease;
+    }
+    .pdf-accordion[open] summary::after { transform: rotate(-180deg); }
+
+    .pdf-container {
+      padding: 14px;
+      background: #ffffff;
+    }
+
+    .pdf-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .pdf-viewer-frame {
+      width: 100%;
+      height: 600px;
+      border: 1px solid var(--neutral-border);
+      border-radius: 4px;
+    }
+
+    /* ========================================================
+       PRINT & PDF GENERATION RULES: STRICT 1-PAGE OUTPUT
+       ======================================================== */
+    @page {
+      size: letter portrait;
+      margin: 0.45in 0.5in;
+    }
+
+    @media print {
+      html, body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        color: #000000;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .container {
+        border: none !important;
+        box-shadow: none !important;
+        max-width: 100% !important;
+        page-break-inside: avoid;
+        page-break-after: avoid;
+      }
+
+      .content {
+        padding: 0 !important;
+      }
+
+      /* HIDE non-essential sections to guarantee 1-page layout */
+      .checklist-section,
+      .diagnostic-panel,
+      .action-bar,
+      .pdf-accordion {
+        display: none !important;
+      }
+
+      .header {
+        padding: 12px 14px !important;
+        border-bottom: 3px solid var(--walton-red) !important;
+        margin-bottom: 12px;
+      }
+
+      .header-logo {
+        height: 38px !important;
+        max-width: 50px !important;
+      }
+
+      .header-text h1 {
+        font-size: 16px !important;
+      }
+
+      .header-text p {
+        font-size: 11.5px !important;
+        color: #e2e8f0 !important;
+      }
+
+      .student-info-bar {
+        grid-template-columns: 1.8fr 1fr 1fr 1fr !important;
+        padding: 8px 12px !important;
+        margin-bottom: 10px !important;
+        border: 1px solid #cbd5e1 !important;
+        background: #f8fafc !important;
+      }
+
+      .track-badge-container {
+        display: flex !important;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .track-badge-container label {
+        font-size: 10px !important;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-muted);
+      }
+
+      .track-badge-value {
+        font-size: 12px !important;
+        font-weight: 700;
+        color: var(--walton-blue-dark);
+        padding-top: 4px;
+      }
+
+      .form-group label {
+        font-size: 10px !important;
+      }
+
+      .form-group input, 
+      .form-group select {
+        padding: 4px 6px !important;
+        font-size: 12px !important;
+        border: none !important;
+        background: transparent !important;
+        font-weight: 700;
+      }
+
+      .status-banner {
+        padding: 8px 12px !important;
+        margin-bottom: 12px !important;
+      }
+
+      .status-banner.valid {
+        background: #f0fdf4 !important;
+        border: 1.5px solid #16a34a !important;
+        color: #166534 !important;
+      }
+
+      .status-icon {
+        font-size: 20px !important;
+      }
+
+      .status-title {
+        font-size: 13px !important;
+      }
+
+      .status-subtitle {
+        font-size: 11px !important;
+      }
+
+      .planning-table {
+        margin-bottom: 0 !important;
+        font-size: 12px !important;
+      }
+
+      .planning-table th, 
+      .planning-table td {
+        padding: 6px 8px !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+
+      .planning-table th {
+        background: #f1f5f9 !important;
+        font-size: 11px !important;
+      }
+
+      .planning-table select, 
+      .planning-table input[type="text"] {
+        border: none !important;
+        appearance: none;
+        -webkit-appearance: none;
+        padding: 0 !important;
+        font-size: 12px !important;
+        font-weight: 600;
+        background: transparent !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <img src="WalEngLogoNoBGRed.png" alt="Walton Engineering Logo" class="header-logo">
+    <div class="header-text">
+      <h1>Walton High School &bull; Engineering</h1>
+      <p>Project 2.5 Sketch Planning & Verification Sheet</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="student-info-bar">
+      <div class="form-group">
+        <label for="studentName">Student Name</label>
+        <input type="text" id="studentName" placeholder="Enter Full Name">
+      </div>
+      <div class="form-group">
+        <label for="classPeriod">Class Period</label>
+        <select id="classPeriod">
+          <option value="">Select...</option>
+          <option value="1">Period 1</option>
+          <option value="2">Period 2</option>
+          <option value="3">Period 3</option>
+          <option value="4">Period 4</option>
+          <option value="5">Period 5</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="submissionDate">Date</label>
+        <input type="date" id="submissionDate">
+      </div>
+      <div class="track-badge-container">
+        <label>Program</label>
+        <div id="printTrackBadge" class="track-badge-value">General</div>
+      </div>
+    </div>
+
+    <div id="statusBanner" class="status-banner invalid">
+      <div id="statusIcon" class="status-icon">✕</div>
+      <div>
+        <div id="statusTitle" class="status-title">Requirements Incomplete</div>
+        <div id="statusSubtitle" class="status-subtitle">Select your objects below to verify your sketch set.</div>
+      </div>
+    </div>
+
+    <div id="diagnosticPanel" class="diagnostic-panel">
+      <div class="diagnostic-header">Audit Feedback & Required Adjustments</div>
+      <div class="diagnostic-grid">
+        <div class="diagnostic-col">
+          <h4>Where You Went Wrong</h4>
+          <ul id="errorsList"></ul>
+        </div>
+        <div class="diagnostic-col">
+          <h4>What Changes You Should Make</h4>
+          <ul id="fixesList"></ul>
+        </div>
+      </div>
+    </div>
+
+    <table class="planning-table">
+      <thead>
+        <tr>
+          <th style="width: 28%;">Sketch Requirement</th>
+          <th>Object / Style Selection</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Isometric 1</strong></td>
+          <td>
+            <select id="sketch1" class="obj-selector" data-req-style="isometric">
+              <option value="">-- Choose Number & Difficulty --</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Oblique 1</strong></td>
+          <td>
+            <select id="sketch2" class="obj-selector" data-req-style="oblique">
+              <option value="">-- Choose Number & Difficulty --</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Perspective 1-Point</strong></td>
+          <td>
+            <select id="sketch3" class="obj-selector" data-req-style="perspective1">
+              <option value="">-- Choose Number & Difficulty --</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Perspective 2-Point</strong></td>
+          <td>
+            <select id="sketch4" class="obj-selector" data-req-style="perspective2">
+              <option value="">-- Choose Number & Difficulty --</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Sketch 5</strong></td>
+          <td>
+            <div class="table-row-input">
+              <select id="sketch5Style">
+                <option value="isometric">Isometric</option>
+                <option value="oblique">Oblique</option>
+                <option value="perspective1">1-Pt Perspective</option>
+                <option value="perspective2">2-Pt Perspective</option>
+                <option value="perspective3">3-Pt Perspective</option>
+              </select>
+              <select id="sketch5" class="obj-selector">
+                <option value="">-- Choose Number & Difficulty --</option>
+              </select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong id="sketch6Label">Sketch 6 (Personal Interest)</strong></td>
+          <td>
+            <div class="table-row-input">
+              <select id="sketch6Style">
+                <option value="isometric">Isometric</option>
+                <option value="oblique">Oblique</option>
+                <option value="perspective1">1-Pt Perspective</option>
+                <option value="perspective2">2-Pt Perspective</option>
+                <option value="perspective3">3-Pt Perspective</option>
+              </select>
+              <input type="text" id="sketch6Desc" placeholder="Enter object description...">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Extra Sketch 1 <em>(Optional)</em></td>
+          <td>
+            <div class="table-row-input">
+              <select id="extra1Style">
+                <option value="isometric">Isometric</option>
+                <option value="oblique">Oblique</option>
+                <option value="perspective1">1-Pt Perspective</option>
+                <option value="perspective2">2-Pt Perspective</option>
+                <option value="perspective3">3-Pt Perspective</option>
+              </select>
+              <input type="text" id="extra1Desc" placeholder="Challenge object number or description">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Extra Sketch 2 <em>(Optional)</em></td>
+          <td>
+            <div class="table-row-input">
+              <select id="extra2Style">
+                <option value="isometric">Isometric</option>
+                <option value="oblique">Oblique</option>
+                <option value="perspective1">1-Pt Perspective</option>
+                <option value="perspective2">2-Pt Perspective</option>
+                <option value="perspective3">3-Pt Perspective</option>
+              </select>
+              <input type="text" id="extra2Desc" placeholder="Challenge object number">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="checklist-section">
+      <div class="checklist-title">Interactive Verification Checklist</div>
+      <div class="checklist-grid">
+        <div class="checklist-item" id="chk-iso"><span class="check-marker">✕</span> 1 sketch using Isometric</div>
+        <div class="checklist-item" id="chk-med"><span class="check-marker">✕</span> At least 2 Medium difficulty objects</div>
+        <div class="checklist-item" id="chk-obl"><span class="check-marker">✕</span> 1 sketch using Oblique</div>
+        <div class="checklist-item" id="chk-hard"><span class="check-marker">✕</span> At least 1 Hard difficulty object</div>
+        <div class="checklist-item" id="chk-p1"><span class="check-marker">✕</span> 1 sketch using 1-Point Perspective</div>
+        <div class="checklist-item" id="chk-unique"><span class="check-marker">✕</span> Unique numbered objects (no repeats)</div>
+        <div class="checklist-item" id="chk-p2"><span class="check-marker">✕</span> 1 sketch using 2-Point Perspective</div>
+        <div class="checklist-item" id="chk-custom"><span class="check-marker">✕</span> <span id="chkCustomLabel">Personal interest object described</span></div>
+        <div class="checklist-item" id="chk-total"><span class="check-marker">✕</span> At least 6 total completed sketches</div>
+        <div class="checklist-item" id="chk-meta"><span class="check-marker">✕</span> Student Name & Class Period provided</div>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <div class="controls-left">
+        <button type="button" class="btn btn-outline" id="btnRandomize">Randomize Selection</button>
+        <label class="stem-check-label">
+          <input type="checkbox" id="stemAcademy">
+          <span>STEM Academy</span>
+        </label>
+        <button type="button" class="btn btn-outline" id="btnReset">Reset</button>
+      </div>
+      <div>
+        <button type="button" class="btn btn-primary" id="btnPrint">Print / Save as PDF</button>
+      </div>
+    </div>
+
+    <details class="pdf-accordion">
+      <summary>Project 2.5 Sketching Objects Reference (PDF)</summary>
+      <div class="pdf-container">
+        <div class="pdf-toolbar">
+          <span>Viewing reference sheet: <code>sketchobjects.pdf</code></span>
+          <a href="sketchobjects.pdf" target="_blank" style="color: var(--walton-blue); text-decoration: none; font-weight: 600;">
+            Open PDF in New Window &nearr;
+          </a>
+        </div>
+        <iframe 
+          src="sketchobjects.pdf#toolbar=1&navpanes=0" 
+          class="pdf-viewer-frame" 
+          title="Project 2.5 Sketching Objects Reference">
+          <p>Your browser does not support inline PDF viewing. <a href="sketchobjects.pdf" target="_blank">Click here to open sketchobjects.pdf</a>.</p>
+        </iframe>
+      </div>
+    </details>
+
+  </div>
+</div>
+
+<script>
+  // Project Objects Database
+  const OBJECTS = [
+    { id: 1, difficulty: 'Easy' },
+    { id: 2, difficulty: 'Medium' },
+    { id: 3, difficulty: 'Medium' },
+    { id: 4, difficulty: 'Medium' },
+    { id: 5, difficulty: 'Easy' },
+    { id: 6, difficulty: 'Medium' },
+    { id: 7, difficulty: 'Hard' },
+    { id: 8, difficulty: 'Hard' },
+    { id: 9, difficulty: 'Easy' },
+    { id: 10, difficulty: 'Hard' },
+    { id: 11, difficulty: 'Easy' }
+  ];
+
+  // Easter Egg Sci-Fi & Fantasy Character Roster
+  const EASTER_EGG_CHARACTERS = [
+    "Princess Donut the Queen Anne Chonk",
+    "Krombopulous Michael",
+    "Artu Ditoo",
+    "See Threepio",
+    "Mister Spahk",
+    "Paul Atreadeez",
+    "Jean-Luc Pickcard",
+    "Gandoff the Grae",
+    "Boba Fatt",
+    "Philip J. Fry-Guy",
+    "Chew-Barker",
+    "Doctor Hoo",
+    "Marty McFlyguy",
+    "Arthur Dent-In-The-Car",
+    "Lord Vayder",
+    "Buffy Summersault"
+  ];
+
+  // Random item inspiration bank
+  const BIO_ITEMS = [
+    "Compound Light Microscope with adjustable focus dials",
+    "Double Helix DNA Model with colored nucleotide bases",
+    "Animal Cell 3D Anatomy Model showing organelles",
+    "Human Heart Anatomical Model with aorta and valves",
+    "T4 Bacteriophage Virus model with tail fibers",
+    "Laboratory Micropipette with volume adjustment wheel",
+    "Plant Chloroplast structure diagrammatic cross-section"
+  ];
+
+  const INTEREST_ITEMS = [
+    "Fender Stratocaster Electric Guitar with pickups",
+    "Custom Skateboard with independent trucks and wheels",
+    "Vintage 35mm SLR Camera with 50mm prime lens",
+    "Mechanical Gaming Keyboard with custom keycaps",
+    "Mountain Bike Hydraulic Disc Brake Caliper",
+    "Wireless Gaming Controller with analog sticks",
+    "Over-Ear Studio Monitor Headphones with coiled cable"
+  ];
+
+  const STYLES = ['isometric', 'oblique', 'perspective1', 'perspective2', 'perspective3'];
+
+  const objSelectors = [
+    document.getElementById('sketch1'),
+    document.getElementById('sketch2'),
+    document.getElementById('sketch3'),
+    document.getElementById('sketch4'),
+    document.getElementById('sketch5')
+  ];
+
+  const stemCheckbox = document.getElementById('stemAcademy');
+  const sketch6Label = document.getElementById('sketch6Label');
+  const sketch6Desc = document.getElementById('sketch6Desc');
+  const chkCustomLabel = document.getElementById('chkCustomLabel');
+  const printTrackBadge = document.getElementById('printTrackBadge');
+  const studentNameInput = document.getElementById('studentName');
+  const classPeriodInput = document.getElementById('classPeriod');
+  const dateInput = document.getElementById('submissionDate');
+
+  function populateSelects() {
+    objSelectors.forEach(select => {
+      const current = select.value;
+      select.innerHTML = '<option value="">-- Choose Number & Difficulty --</option>';
+      OBJECTS.forEach(obj => {
+        const opt = document.createElement('option');
+        opt.value = obj.id;
+        opt.textContent = `Object ${obj.id} (${obj.difficulty})`;
+        select.appendChild(opt);
+      });
+      select.value = current;
+    });
+  }
+
+  function updateStemMode() {
+    const isStem = stemCheckbox.checked;
+    if (isStem) {
+      sketch6Label.textContent = "Sketch 6 (Biology-Related)";
+      sketch6Desc.placeholder = "e.g., DNA double helix, animal cell, compound microscope";
+      chkCustomLabel.textContent = "Biology-related object described (STEM Academy requirement)";
+      printTrackBadge.textContent = "STEM Academy";
+    } else {
+      sketch6Label.textContent = "Sketch 6 (Personal Interest)";
+      sketch6Desc.placeholder = "e.g., Acoustic guitar, skateboard truck, digital camera";
+      chkCustomLabel.textContent = "Personal interest object described";
+      printTrackBadge.textContent = "General";
+    }
+    validateForm();
+  }
+
+  function setCheck(elementId, passed) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    const marker = el.querySelector('.check-marker');
+    if (passed) {
+      el.className = 'checklist-item met';
+      marker.textContent = '✓';
+    } else {
+      el.className = 'checklist-item unmet';
+      marker.textContent = '✕';
+    }
+  }
+
+  function validateForm() {
+    const errors = [];
+    const fixes = [];
+
+    const isStem = stemCheckbox.checked;
+    const nameVal = studentNameInput.value.trim();
+    const periodVal = classPeriodInput.value;
+
+    const s1 = parseInt(document.getElementById('sketch1').value, 10);
+    const s2 = parseInt(document.getElementById('sketch2').value, 10);
+    const s3 = parseInt(document.getElementById('sketch3').value, 10);
+    const s4 = parseInt(document.getElementById('sketch4').value, 10);
+    const s5 = parseInt(document.getElementById('sketch5').value, 10);
+    const s6Text = sketch6Desc.value.trim();
+
+    const selectedIds = [s1, s2, s3, s4, s5].filter(val => !isNaN(val) && val > 0);
+
+    // Style checks
+    const hasIso = !isNaN(s1);
+    const hasObl = !isNaN(s2);
+    const hasP1  = !isNaN(s3);
+    const hasP2  = !isNaN(s4);
+
+    setCheck('chk-iso', hasIso);
+    setCheck('chk-obl', hasObl);
+    setCheck('chk-p1', hasP1);
+    setCheck('chk-p2', hasP2);
+
+    if (!hasIso) { errors.push("Missing Isometric sketch."); fixes.push("Select an object for Isometric 1."); }
+    if (!hasObl) { errors.push("Missing Oblique sketch."); fixes.push("Select an object for Oblique 1."); }
+    if (!hasP1)  { errors.push("Missing 1-Point Perspective sketch."); fixes.push("Select an object for Perspective 1-point."); }
+    if (!hasP2)  { errors.push("Missing 2-Point Perspective sketch."); fixes.push("Select an object for Perspective 2-point."); }
+
+    // Difficulty counts
+    let mediumCount = 0;
+    let hardCount = 0;
+
+    selectedIds.forEach(id => {
+      const obj = OBJECTS.find(o => o.id === id);
+      if (obj) {
+        if (obj.difficulty === 'Medium') mediumCount++;
+        if (obj.difficulty === 'Hard') hardCount++;
+      }
+    });
+
+    const hasEnoughMedium = mediumCount >= 2;
+    const hasEnoughHard = hardCount >= 1;
+
+    setCheck('chk-med', hasEnoughMedium);
+    setCheck('chk-hard', hasEnoughHard);
+
+    if (!hasEnoughMedium) {
+      errors.push(`Only selected ${mediumCount} of 2 required Medium objects.`);
+      fixes.push("Choose at least 2 Medium difficulty objects (Objects 2, 3, 4, or 6).");
+    }
+
+    if (!hasEnoughHard) {
+      errors.push("No Hard difficulty object selected.");
+      fixes.push("Choose at least 1 Hard difficulty object (Objects 7, 8, or 10).");
+    }
+
+    // Unique selection check
+    const uniqueIds = new Set(selectedIds);
+    const hasDuplicates = selectedIds.length !== uniqueIds.size;
+    setCheck('chk-unique', selectedIds.length > 0 && !hasDuplicates);
+
+    if (hasDuplicates) {
+      errors.push("Duplicate numbered objects chosen in Sketches 1–5.");
+      fixes.push("Each numbered object can only be sketched once. Replace duplicate numbers.");
+    }
+
+    // Sketch 6 Custom Description Check
+    const hasSketch6 = s6Text.length > 2;
+    setCheck('chk-custom', hasSketch6);
+    if (!hasSketch6) {
+      if (isStem) {
+        errors.push("Missing Biology-related object description for Sketch 6.");
+        fixes.push("Type in a description of a biology-related object for Sketch 6.");
+      } else {
+        errors.push("Missing personal interest object description for Sketch 6.");
+        fixes.push("Type in an object representing your personal interests for Sketch 6.");
+      }
+    }
+
+    // Total Count Check
+    const has6Sketches = selectedIds.length === 5 && hasSketch6;
+    setCheck('chk-total', has6Sketches);
+    if (!has6Sketches) {
+      errors.push(`Currently configured ${selectedIds.length + (hasSketch6 ? 1 : 0)} of 6 required sketches.`);
+      fixes.push("Ensure all 5 numbered objects and the Sketch 6 description are completed.");
+    }
+
+    // Student Name & Easter Egg Detection
+    const isEasterEggName = EASTER_EGG_CHARACTERS.some(
+      charName => charName.toLowerCase() === nameVal.toLowerCase()
+    );
+
+    if (isEasterEggName) {
+      studentNameInput.classList.add('easter-egg-alert');
+      errors.push(`🚨 YOU CANNOT SUBMIT AS "${nameVal}"!`);
+      fixes.push(`Replace the fictional character alias "${nameVal}" with your ACTUAL first and last name!`);
+    } else {
+      studentNameInput.classList.remove('easter-egg-alert');
+    }
+
+    const hasMeta = nameVal.length > 0 && !isEasterEggName && periodVal !== "";
+    setCheck('chk-meta', hasMeta);
+
+    if (!hasMeta && !isEasterEggName) {
+      if (nameVal.length === 0) {
+        errors.push("Missing student name.");
+        fixes.push("Enter your actual Student Name.");
+      }
+      if (periodVal === "") {
+        errors.push("Missing class period.");
+        fixes.push("Select your Class Period from the dropdown.");
+      }
+    }
+
+    // Status Banner and Diagnostic Rendering
+    const statusBanner = document.getElementById('statusBanner');
+    const statusIcon = document.getElementById('statusIcon');
+    const statusTitle = document.getElementById('statusTitle');
+    const statusSubtitle = document.getElementById('statusSubtitle');
+    const diagnosticPanel = document.getElementById('diagnosticPanel');
+    const errorsList = document.getElementById('errorsList');
+    const fixesList = document.getElementById('fixesList');
+
+    const allPassed = hasIso && hasObl && hasP1 && hasP2 && hasEnoughMedium && 
+                      hasEnoughHard && !hasDuplicates && hasSketch6 && has6Sketches && hasMeta;
+
+    if (allPassed) {
+      statusBanner.className = 'status-banner valid';
+      statusIcon.textContent = '✓';
+      statusTitle.textContent = 'Valid Set of Objects! Ready to Sketch';
+      statusSubtitle.textContent = 'All requirements satisfied. Approved for submission.';
+      diagnosticPanel.classList.remove('visible');
+    } else {
+      statusBanner.className = 'status-banner invalid';
+      statusIcon.textContent = '✕';
+      statusTitle.textContent = isEasterEggName ? '🚨 Fictional Identity Detected! Nice Try!' : 'Requirements Incomplete';
+      statusSubtitle.textContent = isEasterEggName 
+        ? `You cannot submit work as ${nameVal}. Enter your real name above!` 
+        : `Identified ${errors.length} issue${errors.length === 1 ? '' : 's'} that must be resolved.`;
+      
+      errorsList.innerHTML = errors.map(e => `<li>${e}</li>`).join('');
+      fixesList.innerHTML = fixes.map(f => `<li>${f}</li>`).join('');
+      diagnosticPanel.classList.add('visible');
+    }
+  }
+
+  function shuffle(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  // Randomized Selection Engine with Easter Egg Name injection
+  function randomizeSelection() {
+    const mediumPool = [2, 3, 4, 6];
+    const hardPool = [7, 8, 10];
+    const allIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+    // Pick 2 distinct Mediums
+    const shuffledMedium = shuffle(mediumPool);
+    const pickedMedium = [shuffledMedium[0], shuffledMedium[1]];
+
+    // Pick 1 distinct Hard
+    const shuffledHard = shuffle(hardPool);
+    const pickedHard = [shuffledHard[0]];
+
+    // Pick remaining 2 distinct objects from all unselected
+    const alreadyChosen = new Set([...pickedMedium, ...pickedHard]);
+    const remainingPool = allIds.filter(id => !alreadyChosen.has(id));
+    const shuffledRemaining = shuffle(remainingPool);
+    const pickedRemaining = [shuffledRemaining[0], shuffledRemaining[1]];
+
+    // Combine all 5 and shuffle their positions across Sketches 1-5
+    const finalFive = shuffle([...pickedMedium, ...pickedHard, ...pickedRemaining]);
+
+    document.getElementById('sketch1').value = String(finalFive[0]);
+    document.getElementById('sketch2').value = String(finalFive[1]);
+    document.getElementById('sketch3').value = String(finalFive[2]);
+    document.getElementById('sketch4').value = String(finalFive[3]);
+    document.getElementById('sketch5').value = String(finalFive[4]);
+
+    document.getElementById('sketch5Style').value = STYLES[Math.floor(Math.random() * STYLES.length)];
+    document.getElementById('sketch6Style').value = STYLES[Math.floor(Math.random() * STYLES.length)];
+
+    if (stemCheckbox.checked) {
+      sketch6Desc.value = BIO_ITEMS[Math.floor(Math.random() * BIO_ITEMS.length)];
+    } else {
+      sketch6Desc.value = INTEREST_ITEMS[Math.floor(Math.random() * INTEREST_ITEMS.length)];
+    }
+
+    // Populate a random sci-fi / fantasy alias into the student name field
+    const randomAlias = EASTER_EGG_CHARACTERS[Math.floor(Math.random() * EASTER_EGG_CHARACTERS.length)];
+    studentNameInput.value = randomAlias;
+
+    // Pick a random period if not already selected
+    if (!classPeriodInput.value) {
+      classPeriodInput.value = String(Math.floor(Math.random() * 5) + 1);
+    }
+
+    validateForm();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    populateSelects();
+    
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+
+    document.querySelectorAll('select, input').forEach(el => {
+      el.addEventListener('change', validateForm);
+      el.addEventListener('input', validateForm);
+    });
+
+    stemCheckbox.addEventListener('change', updateStemMode);
+
+    document.getElementById('btnRandomize').addEventListener('click', randomizeSelection);
+    
+    document.getElementById('btnReset').addEventListener('click', () => {
+      document.querySelectorAll('select').forEach(s => s.value = "");
+      document.querySelectorAll('input[type="text"]').forEach(i => i.value = "");
+      studentNameInput.classList.remove('easter-egg-alert');
+      stemCheckbox.checked = false;
+      document.getElementById('sketch5Style').value = "isometric";
+      document.getElementById('sketch6Style').value = "isometric";
+      document.getElementById('extra1Style').value = "isometric";
+      document.getElementById('extra2Style').value = "isometric";
+      dateInput.value = today;
+      updateStemMode();
+    });
+
+    document.getElementById('btnPrint').addEventListener('click', () => {
+      window.print();
+    });
+
+    updateStemMode();
+  });
+</script>
+
+</body>
+</html>
