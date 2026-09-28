@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project 2.5 Sketch Planning Verification - Walton Engineering</title>
+  <link rel="icon" type="image/png" href="WalEngLogoNoBGRed.png">
+  <link rel="apple-touch-icon" href="WalEngLogoNoBGRed.png">
   <style>
     :root {
       --walton-blue: #0B4EA2;
@@ -48,26 +50,20 @@
     .header {
       background: linear-gradient(135deg, var(--walton-blue-dark) 0%, var(--walton-blue) 100%);
       color: #ffffff;
-      padding: 20px 24px;
+      padding: 18px 24px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
       border-bottom: 4px solid var(--walton-red);
     }
 
     .header-logo {
-      width: 44px;
-      height: 44px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--walton-blue);
-      font-size: 22px;
-      font-weight: 900;
-      border: 2px solid var(--walton-red);
+      height: 52px;
+      width: auto;
+      max-width: 70px;
+      object-fit: contain;
       flex-shrink: 0;
+      display: block;
     }
 
     .header-text h1 {
@@ -86,10 +82,10 @@
       padding: 20px 24px;
     }
 
-    /* Student metadata bar */
+    /* Student metadata bar - 3-column layout */
     .student-info-bar {
       display: grid;
-      grid-template-columns: 2fr 1fr 1.2fr 1.2fr;
+      grid-template-columns: 2fr 1fr 1.2fr;
       gap: 14px;
       background: var(--neutral-bg);
       border: 1px solid var(--neutral-border);
@@ -123,26 +119,9 @@
       color: var(--text-dark);
     }
 
-    .stem-toggle-container {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      height: 100%;
-      padding-top: 14px;
-    }
-
-    .stem-toggle-container input[type="checkbox"] {
-      width: 17px;
-      height: 17px;
-      accent-color: var(--walton-blue);
-      cursor: pointer;
-    }
-
-    .stem-toggle-container label {
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      color: var(--walton-blue-dark);
+    /* Track indicator badge for print */
+    .track-badge-container {
+      display: none;
     }
 
     /* Status banner */
@@ -347,8 +326,37 @@
       margin-bottom: 20px;
     }
 
+    .controls-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .stem-check-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--walton-blue-dark);
+      padding: 6px 10px;
+      border-radius: 4px;
+      background: var(--neutral-bg);
+      border: 1px solid var(--neutral-border);
+      user-select: none;
+    }
+
+    .stem-check-label input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--walton-blue);
+      cursor: pointer;
+    }
+
     .btn {
-      padding: 8px 16px;
+      padding: 8px 15px;
       font-size: 12.5px;
       font-weight: 600;
       border-radius: 4px;
@@ -357,10 +365,13 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      transition: background 0.15s ease;
     }
 
     .btn-primary { background: var(--walton-blue); color: white; }
+    .btn-primary:hover { background: var(--walton-blue-dark); }
     .btn-outline { background: white; border: 1px solid var(--neutral-border); color: var(--text-dark); }
+    .btn-outline:hover { background: #f8fafc; }
 
     /* PDF Reference Drawer */
     .pdf-accordion {
@@ -442,12 +453,11 @@
         padding: 0 !important;
       }
 
-      /* HIDE page 2 elements, checklist, buttons, and references */
+      /* HIDE non-essential sections to guarantee 1-page layout */
       .checklist-section,
       .diagnostic-panel,
       .action-bar,
-      .pdf-accordion,
-      .preset-buttons {
+      .pdf-accordion {
         display: none !important;
       }
 
@@ -458,9 +468,8 @@
       }
 
       .header-logo {
-        width: 36px !important;
-        height: 36px !important;
-        font-size: 18px !important;
+        height: 38px !important;
+        max-width: 50px !important;
       }
 
       .header-text h1 {
@@ -473,10 +482,32 @@
       }
 
       .student-info-bar {
+        grid-template-columns: 1.8fr 1fr 1fr 1fr !important;
         padding: 8px 12px !important;
         margin-bottom: 10px !important;
         border: 1px solid #cbd5e1 !important;
         background: #f8fafc !important;
+      }
+
+      .track-badge-container {
+        display: flex !important;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .track-badge-container label {
+        font-size: 10px !important;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-muted);
+      }
+
+      .track-badge-value {
+        font-size: 12px !important;
+        font-weight: 700;
+        color: var(--walton-blue-dark);
+        padding-top: 4px;
       }
 
       .form-group label {
@@ -548,7 +579,7 @@
 
 <div class="container">
   <div class="header">
-    <div class="header-logo">W</div>
+    <img src="WalEngLogoNoBGRed.png" alt="Walton Engineering Logo" class="header-logo">
     <div class="header-text">
       <h1>Walton High School &bull; Engineering</h1>
       <p>Project 2.5 Sketch Planning & Verification Sheet</p>
@@ -573,13 +604,14 @@
           <option value="5">Period 5</option>
         </select>
       </div>
-      <div class="stem-toggle-container">
-        <input type="checkbox" id="stemAcademy">
-        <label for="stemAcademy">STEM Academy</label>
-      </div>
       <div class="form-group">
         <label for="submissionDate">Date</label>
         <input type="date" id="submissionDate">
+      </div>
+      <!-- Print-Only Track Confirmation Block -->
+      <div class="track-badge-container">
+        <label>Program</label>
+        <div id="printTrackBadge" class="track-badge-value">General</div>
       </div>
     </div>
 
@@ -730,11 +762,14 @@
       </div>
     </div>
 
-    <!-- Interactive Actions (Screen-only) -->
+    <!-- Interactive Actions: Randomize Selection + STEM Checkbox + Print -->
     <div class="action-bar">
-      <div class="preset-buttons" style="display: flex; gap: 8px;">
-        <button type="button" class="btn btn-outline" id="btnSampleStem">Load Sample (STEM)</button>
-        <button type="button" class="btn btn-outline" id="btnSampleNonStem">Load Sample (Non-STEM)</button>
+      <div class="controls-left">
+        <button type="button" class="btn btn-outline" id="btnRandomize">Randomize Selection</button>
+        <label class="stem-check-label">
+          <input type="checkbox" id="stemAcademy">
+          <span>STEM Academy</span>
+        </label>
         <button type="button" class="btn btn-outline" id="btnReset">Reset</button>
       </div>
       <div>
@@ -780,25 +815,28 @@
     { id: 11, difficulty: 'Easy' }
   ];
 
-  // Easter Egg Sci-Fi & Fantasy Character Roster
-  const EASTER_EGG_CHARACTERS = [
-    "Princess Donut the Queen Anne Chonk",
-    "Krombopulous Michael",
-    "Artu Ditoo",
-    "See Threepio",
-    "Mister Spahk",
-    "Paul Atreadeez",
-    "Jean-Luc Pickcard",
-    "Gandoff the Grae",
-    "Boba Fatt",
-    "Philip J. Fry-Guy",
-    "Chew-Barker",
-    "Doctor Hoo",
-    "Marty McFlyguy",
-    "Arthur Dent-In-The-Car",
-    "Lord Vayder",
-    "Buffy Summersault"
+  // Random item inspiration bank
+  const BIO_ITEMS = [
+    "Compound Light Microscope with adjustable focus dials",
+    "Double Helix DNA Model with colored nucleotide bases",
+    "Animal Cell 3D Anatomy Model showing organelles",
+    "Human Heart Anatomical Model with aorta and valves",
+    "T4 Bacteriophage Virus model with tail fibers",
+    "Laboratory Micropipette with volume adjustment wheel",
+    "Plant Chloroplast structure diagrammatic cross-section"
   ];
+
+  const INTEREST_ITEMS = [
+    "Fender Stratocaster Electric Guitar with pickups",
+    "Custom Skateboard with independent trucks and wheels",
+    "Vintage 35mm SLR Camera with 50mm prime lens",
+    "Mechanical Gaming Keyboard with custom keycaps",
+    "Mountain Bike Hydraulic Disc Brake Caliper",
+    "Wireless Gaming Controller with analog sticks",
+    "Over-Ear Studio Monitor Headphones with coiled cable"
+  ];
+
+  const STYLES = ['isometric', 'oblique', 'perspective1', 'perspective2', 'perspective3'];
 
   const objSelectors = [
     document.getElementById('sketch1'),
@@ -812,6 +850,7 @@
   const sketch6Label = document.getElementById('sketch6Label');
   const sketch6Desc = document.getElementById('sketch6Desc');
   const chkCustomLabel = document.getElementById('chkCustomLabel');
+  const printTrackBadge = document.getElementById('printTrackBadge');
   const studentNameInput = document.getElementById('studentName');
   const classPeriodInput = document.getElementById('classPeriod');
   const dateInput = document.getElementById('submissionDate');
@@ -836,10 +875,12 @@
       sketch6Label.textContent = "Sketch 6 (Biology-Related)";
       sketch6Desc.placeholder = "e.g., DNA double helix, animal cell, compound microscope";
       chkCustomLabel.textContent = "Biology-related object described (STEM Academy requirement)";
+      printTrackBadge.textContent = "STEM Academy";
     } else {
       sketch6Label.textContent = "Sketch 6 (Personal Interest)";
       sketch6Desc.placeholder = "e.g., Acoustic guitar, skateboard truck, digital camera";
       chkCustomLabel.textContent = "Personal interest object described";
+      printTrackBadge.textContent = "General";
     }
     validateForm();
   }
@@ -957,7 +998,7 @@
       fixes.push("Enter your Student Name and choose your Class Period.");
     }
 
-    // Banner and Diagnostic Rendering
+    // Status Banner and Diagnostic Rendering
     const statusBanner = document.getElementById('statusBanner');
     const statusIcon = document.getElementById('statusIcon');
     const statusTitle = document.getElementById('statusTitle');
@@ -987,33 +1028,54 @@
     }
   }
 
-  // Sample Loader with Sci-Fi / Fantasy Character Easter Egg
-  function loadPreset(isStem) {
-    stemCheckbox.checked = isStem;
-    
-    // Pick a random funny character name from the roster
-    const randomCharacter = EASTER_EGG_CHARACTERS[Math.floor(Math.random() * EASTER_EGG_CHARACTERS.length)];
-    studentNameInput.value = randomCharacter;
-    
-    // Pick a random class period (1-5)
-    classPeriodInput.value = String(Math.floor(Math.random() * 5) + 1);
-    
-    // Valid combination satisfying: 2 Mediums (Objects 2, 3), 1 Hard (Object 7)[cite: 2]
-    document.getElementById('sketch1').value = "1"; // Easy
-    document.getElementById('sketch2').value = "2"; // Medium
-    document.getElementById('sketch3').value = "3"; // Medium
-    document.getElementById('sketch4').value = "7"; // Hard
-    document.getElementById('sketch5').value = "9"; // Easy
-    document.getElementById('sketch5Style').value = "perspective3";
-    
-    document.getElementById('sketch6Style').value = "isometric";
-    if (isStem) {
-      sketch6Desc.value = "Compound Light Microscope with dual coarse/fine adjustments";
-    } else {
-      sketch6Desc.value = "Fender Stratocaster Electric Guitar with triple pickups";
+  function shuffle(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
     }
-    
-    updateStemMode();
+    return arr;
+  }
+
+  // Randomized Selection Engine[cite: 1, 2]
+  function randomizeSelection() {
+    const mediumPool = [2, 3, 4, 6];
+    const hardPool = [7, 8, 10];
+    const allIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+    // Pick 2 distinct Mediums[cite: 1, 2]
+    const shuffledMedium = shuffle(mediumPool);
+    const pickedMedium = [shuffledMedium[0], shuffledMedium[1]];
+
+    // Pick 1 distinct Hard[cite: 1, 2]
+    const shuffledHard = shuffle(hardPool);
+    const pickedHard = [shuffledHard[0]];
+
+    // Pick remaining 2 distinct objects from all unselected
+    const alreadyChosen = new Set([...pickedMedium, ...pickedHard]);
+    const remainingPool = allIds.filter(id => !alreadyChosen.has(id));
+    const shuffledRemaining = shuffle(remainingPool);
+    const pickedRemaining = [shuffledRemaining[0], shuffledRemaining[1]];
+
+    // Combine all 5 and shuffle their positions across Sketches 1-5
+    const finalFive = shuffle([...pickedMedium, ...pickedHard, ...pickedRemaining]);
+
+    document.getElementById('sketch1').value = String(finalFive[0]);
+    document.getElementById('sketch2').value = String(finalFive[1]);
+    document.getElementById('sketch3').value = String(finalFive[2]);
+    document.getElementById('sketch4').value = String(finalFive[3]);
+    document.getElementById('sketch5').value = String(finalFive[4]);
+
+    document.getElementById('sketch5Style').value = STYLES[Math.floor(Math.random() * STYLES.length)];
+    document.getElementById('sketch6Style').value = STYLES[Math.floor(Math.random() * STYLES.length)];
+
+    if (stemCheckbox.checked) {
+      sketch6Desc.value = BIO_ITEMS[Math.floor(Math.random() * BIO_ITEMS.length)];
+    } else {
+      sketch6Desc.value = INTEREST_ITEMS[Math.floor(Math.random() * INTEREST_ITEMS.length)];
+    }
+
+    validateForm();
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -1029,8 +1091,7 @@
 
     stemCheckbox.addEventListener('change', updateStemMode);
 
-    document.getElementById('btnSampleStem').addEventListener('click', () => loadPreset(true));
-    document.getElementById('btnSampleNonStem').addEventListener('click', () => loadPreset(false));
+    document.getElementById('btnRandomize').addEventListener('click', randomizeSelection);
     
     document.getElementById('btnReset').addEventListener('click', () => {
       document.querySelectorAll('select').forEach(s => s.value = "");
