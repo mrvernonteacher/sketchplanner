@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project 2.5 Sketch Planning Verification - Walton Engineering</title>
-  <link rel="icon" type="image/png" href="WalEngLogoNoBGRed.png">
-  <link rel="apple-touch-icon" href="WalEngLogoNoBGRed.png">
+  <link rel="icon" type="image/png" href="sketchfavicon.svg">
+  <link rel="apple-touch-icon" href="sketchfavicon.svg">
   <style>
     :root {
       --walton-blue: #0B4EA2;
@@ -600,6 +600,7 @@
   </div>
 
   <div class="content">
+    <!-- Student Information Bar -->
     <div class="student-info-bar">
       <div class="form-group">
         <label for="studentName">Student Name</label>
@@ -620,12 +621,14 @@
         <label for="submissionDate">Date</label>
         <input type="date" id="submissionDate">
       </div>
+      <!-- Print-Only Track Confirmation Block -->
       <div class="track-badge-container">
         <label>Program</label>
         <div id="printTrackBadge" class="track-badge-value">General</div>
       </div>
     </div>
 
+    <!-- Live Status Banner -->
     <div id="statusBanner" class="status-banner invalid">
       <div id="statusIcon" class="status-icon">✕</div>
       <div>
@@ -634,6 +637,7 @@
       </div>
     </div>
 
+    <!-- Diagnostic Breakdown (Screen-only, Hidden on Print) -->
     <div id="diagnosticPanel" class="diagnostic-panel">
       <div class="diagnostic-header">Audit Feedback & Required Adjustments</div>
       <div class="diagnostic-grid">
@@ -648,6 +652,7 @@
       </div>
     </div>
 
+    <!-- Core Sketches Table (Primary 1-Page Printable Section)[cite: 1] -->
     <table class="planning-table">
       <thead>
         <tr>
@@ -753,6 +758,7 @@
       </tbody>
     </table>
 
+    <!-- Project 2.5 Checklist (Screen-only, Hidden on Print)[cite: 1] -->
     <div class="checklist-section">
       <div class="checklist-title">Interactive Verification Checklist</div>
       <div class="checklist-grid">
@@ -769,6 +775,7 @@
       </div>
     </div>
 
+    <!-- Interactive Actions: Randomize Selection + STEM Checkbox + Print -->
     <div class="action-bar">
       <div class="controls-left">
         <button type="button" class="btn btn-outline" id="btnRandomize">Randomize Selection</button>
@@ -783,6 +790,7 @@
       </div>
     </div>
 
+    <!-- Embedded PDF Reference Drawer (Screen-only) -->
     <details class="pdf-accordion">
       <summary>Project 2.5 Sketching Objects Reference (PDF)</summary>
       <div class="pdf-container">
@@ -805,7 +813,7 @@
 </div>
 
 <script>
-  // Project Objects Database
+  // Project Objects Database[cite: 2]
   const OBJECTS = [
     { id: 1, difficulty: 'Easy' },
     { id: 2, difficulty: 'Medium' },
@@ -940,7 +948,7 @@
 
     const selectedIds = [s1, s2, s3, s4, s5].filter(val => !isNaN(val) && val > 0);
 
-    // Style checks
+    // Style checks[cite: 1]
     const hasIso = !isNaN(s1);
     const hasObl = !isNaN(s2);
     const hasP1  = !isNaN(s3);
@@ -956,7 +964,7 @@
     if (!hasP1)  { errors.push("Missing 1-Point Perspective sketch."); fixes.push("Select an object for Perspective 1-point."); }
     if (!hasP2)  { errors.push("Missing 2-Point Perspective sketch."); fixes.push("Select an object for Perspective 2-point."); }
 
-    // Difficulty counts
+    // Difficulty counts[cite: 1, 2]
     let mediumCount = 0;
     let hardCount = 0;
 
@@ -994,7 +1002,7 @@
       fixes.push("Each numbered object can only be sketched once. Replace duplicate numbers.");
     }
 
-    // Sketch 6 Custom Description Check
+    // Sketch 6 Custom Description Check[cite: 1]
     const hasSketch6 = s6Text.length > 2;
     setCheck('chk-custom', hasSketch6);
     if (!hasSketch6) {
@@ -1007,7 +1015,7 @@
       }
     }
 
-    // Total Count Check
+    // Total Count Check[cite: 1]
     const has6Sketches = selectedIds.length === 5 && hasSketch6;
     setCheck('chk-total', has6Sketches);
     if (!has6Sketches) {
@@ -1028,18 +1036,20 @@
       studentNameInput.classList.remove('easter-egg-alert');
     }
 
-    const hasMeta = nameVal.length > 0 && !isEasterEggName && periodVal !== "";
+    // Metadata Check
+    const hasValidName = nameVal.length > 0 && !isEasterEggName;
+    const hasValidPeriod = periodVal !== "";
+    const hasMeta = hasValidName && hasValidPeriod;
     setCheck('chk-meta', hasMeta);
 
-    if (!hasMeta && !isEasterEggName) {
-      if (nameVal.length === 0) {
-        errors.push("Missing student name.");
-        fixes.push("Enter your actual Student Name.");
-      }
-      if (periodVal === "") {
-        errors.push("Missing class period.");
-        fixes.push("Select your Class Period from the dropdown.");
-      }
+    if (!hasValidName && !isEasterEggName) {
+      errors.push("Missing student name.");
+      fixes.push("Enter your actual Student Name.");
+    }
+
+    if (!hasValidPeriod) {
+      errors.push("Missing class period.");
+      fixes.push("Select your Class Period from the dropdown.");
     }
 
     // Status Banner and Diagnostic Rendering
@@ -1083,17 +1093,17 @@
     return arr;
   }
 
-  // Randomized Selection Engine with Easter Egg Name injection
+  // Randomized Selection Engine[cite: 1, 2]
   function randomizeSelection() {
     const mediumPool = [2, 3, 4, 6];
     const hardPool = [7, 8, 10];
     const allIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
-    // Pick 2 distinct Mediums
+    // Pick 2 distinct Mediums[cite: 1, 2]
     const shuffledMedium = shuffle(mediumPool);
     const pickedMedium = [shuffledMedium[0], shuffledMedium[1]];
 
-    // Pick 1 distinct Hard
+    // Pick 1 distinct Hard[cite: 1, 2]
     const shuffledHard = shuffle(hardPool);
     const pickedHard = [shuffledHard[0]];
 
@@ -1125,10 +1135,8 @@
     const randomAlias = EASTER_EGG_CHARACTERS[Math.floor(Math.random() * EASTER_EGG_CHARACTERS.length)];
     studentNameInput.value = randomAlias;
 
-    // Pick a random period if not already selected
-    if (!classPeriodInput.value) {
-      classPeriodInput.value = String(Math.floor(Math.random() * 5) + 1);
-    }
+    // Leave class period blank so students must actively select their own
+    classPeriodInput.value = "";
 
     validateForm();
   }
