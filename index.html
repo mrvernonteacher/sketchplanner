@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project 2.5 Sketch Planning Verification - Walton Engineering</title>
-  <link rel="icon" type="image/png" href="sketchfavicon.svg">
-  <link rel="apple-touch-icon" href="sketchfavicon.svg">
+  <link rel="icon" type="image/svg+xml" href="sketchfavicon.svg">
   <style>
     :root {
       --walton-blue: #0B4EA2;
@@ -85,7 +84,7 @@
     /* Student metadata bar */
     .student-info-bar {
       display: grid;
-      grid-template-columns: 2fr 1fr 1.2fr;
+      grid-template-columns: 2fr 1fr 1.2fr 1.2fr;
       gap: 14px;
       background: var(--neutral-bg);
       border: 1px solid var(--neutral-border);
@@ -117,6 +116,28 @@
       font-size: 13px;
       background: white;
       color: var(--text-dark);
+    }
+
+    .stem-toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 100%;
+      padding-top: 14px;
+    }
+
+    .stem-toggle-container input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--walton-blue);
+      cursor: pointer;
+    }
+
+    .stem-toggle-container label {
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--walton-blue-dark);
     }
 
     .form-group input.easter-egg-alert {
@@ -502,6 +523,10 @@
         background: #f8fafc !important;
       }
 
+      .stem-toggle-container {
+        display: none !important;
+      }
+
       .track-badge-container {
         display: flex !important;
         flex-direction: column;
@@ -600,7 +625,7 @@
   </div>
 
   <div class="content">
-    <!-- Student Information Bar -->
+    <!-- Student Information Bar: Includes Top STEM Academy Checkbox -->
     <div class="student-info-bar">
       <div class="form-group">
         <label for="studentName">Student Name</label>
@@ -616,6 +641,10 @@
           <option value="4">Period 4</option>
           <option value="5">Period 5</option>
         </select>
+      </div>
+      <div class="stem-toggle-container">
+        <input type="checkbox" id="stemAcademyTop">
+        <label for="stemAcademyTop">STEM Academy</label>
       </div>
       <div class="form-group">
         <label for="submissionDate">Date</label>
@@ -775,12 +804,12 @@
       </div>
     </div>
 
-    <!-- Interactive Actions: Randomize Selection + STEM Checkbox + Print -->
+    <!-- Interactive Actions: Randomize Selection + Synced STEM Checkbox + Print -->
     <div class="action-bar">
       <div class="controls-left">
         <button type="button" class="btn btn-outline" id="btnRandomize">Randomize Selection</button>
         <label class="stem-check-label">
-          <input type="checkbox" id="stemAcademy">
+          <input type="checkbox" id="stemAcademyAction">
           <span>STEM Academy</span>
         </label>
         <button type="button" class="btn btn-outline" id="btnReset">Reset</button>
@@ -879,7 +908,10 @@
     document.getElementById('sketch5')
   ];
 
-  const stemCheckbox = document.getElementById('stemAcademy');
+  // Synchronized STEM checkboxes (top metadata bar + action bar)
+  const stemCheckboxTop = document.getElementById('stemAcademyTop');
+  const stemCheckboxAction = document.getElementById('stemAcademyAction');
+
   const sketch6Label = document.getElementById('sketch6Label');
   const sketch6Desc = document.getElementById('sketch6Desc');
   const chkCustomLabel = document.getElementById('chkCustomLabel');
@@ -902,8 +934,17 @@
     });
   }
 
+  function syncStemCheckboxes(sourceIsTop) {
+    if (sourceIsTop) {
+      stemCheckboxAction.checked = stemCheckboxTop.checked;
+    } else {
+      stemCheckboxTop.checked = stemCheckboxAction.checked;
+    }
+    updateStemMode();
+  }
+
   function updateStemMode() {
-    const isStem = stemCheckbox.checked;
+    const isStem = stemCheckboxTop.checked;
     if (isStem) {
       sketch6Label.textContent = "Sketch 6 (Biology-Related)";
       sketch6Desc.placeholder = "e.g., DNA double helix, animal cell, compound microscope";
@@ -935,7 +976,7 @@
     const errors = [];
     const fixes = [];
 
-    const isStem = stemCheckbox.checked;
+    const isStem = stemCheckboxTop.checked;
     const nameVal = studentNameInput.value.trim();
     const periodVal = classPeriodInput.value;
 
@@ -1093,7 +1134,7 @@
     return arr;
   }
 
-  // Randomized Selection Engine[cite: 1, 2]
+  // Randomized Selection Engine: leaves class period blank[cite: 1, 2]
   function randomizeSelection() {
     const mediumPool = [2, 3, 4, 6];
     const hardPool = [7, 8, 10];
@@ -1113,7 +1154,7 @@
     const shuffledRemaining = shuffle(remainingPool);
     const pickedRemaining = [shuffledRemaining[0], shuffledRemaining[1]];
 
-    // Combine all 5 and shuffle their positions across Sketches 1-5
+    // Combine all 5 and shuffle positions across Sketches 1-5
     const finalFive = shuffle([...pickedMedium, ...pickedHard, ...pickedRemaining]);
 
     document.getElementById('sketch1').value = String(finalFive[0]);
@@ -1125,7 +1166,7 @@
     document.getElementById('sketch5Style').value = STYLES[Math.floor(Math.random() * STYLES.length)];
     document.getElementById('sketch6Style').value = STYLES[Math.floor(Math.random() * STYLES.length)];
 
-    if (stemCheckbox.checked) {
+    if (stemCheckboxTop.checked) {
       sketch6Desc.value = BIO_ITEMS[Math.floor(Math.random() * BIO_ITEMS.length)];
     } else {
       sketch6Desc.value = INTEREST_ITEMS[Math.floor(Math.random() * INTEREST_ITEMS.length)];
@@ -1135,7 +1176,7 @@
     const randomAlias = EASTER_EGG_CHARACTERS[Math.floor(Math.random() * EASTER_EGG_CHARACTERS.length)];
     studentNameInput.value = randomAlias;
 
-    // Leave class period blank so students must actively select their own
+    // Leave class period blank so students must select their own
     classPeriodInput.value = "";
 
     validateForm();
@@ -1152,7 +1193,9 @@
       el.addEventListener('input', validateForm);
     });
 
-    stemCheckbox.addEventListener('change', updateStemMode);
+    // Two-way synchronization of STEM checkboxes
+    stemCheckboxTop.addEventListener('change', () => syncStemCheckboxes(true));
+    stemCheckboxAction.addEventListener('change', () => syncStemCheckboxes(false));
 
     document.getElementById('btnRandomize').addEventListener('click', randomizeSelection);
     
@@ -1160,7 +1203,8 @@
       document.querySelectorAll('select').forEach(s => s.value = "");
       document.querySelectorAll('input[type="text"]').forEach(i => i.value = "");
       studentNameInput.classList.remove('easter-egg-alert');
-      stemCheckbox.checked = false;
+      stemCheckboxTop.checked = false;
+      stemCheckboxAction.checked = false;
       document.getElementById('sketch5Style').value = "isometric";
       document.getElementById('sketch6Style').value = "isometric";
       document.getElementById('extra1Style').value = "isometric";
