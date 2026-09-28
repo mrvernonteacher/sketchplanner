@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Walton Engineering - Project 2.5 Sketch Planning Verification</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Print Optimization for Single Letter PDF Export */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9.5pt;
+        line-height: 1.2;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-only {
+        display: block !important;
+      }
+      .page-container {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .print-card {
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 0.5rem !important;
+        padding: 0.5rem 0.75rem !important;
+      }
+      select, input[type="text"], input[type="date"] {
+        border: 1px solid #94a3b8 !important;
+        background: transparent !important;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding: 2px 4px !important;
+        color: #0f172a !important;
+        font-weight: 600;
+        font-size: 9pt !important;
+      }
+      @page {
+        size: letter portrait;
+        margin: 0.35in;
+      }
+    }
+    @media screen {
+      .print-only {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen antialiased flex flex-col justify-between">
+
+  <header class="bg-[#0B4EA2] border-b-4 border-[#C8102E] text-white shadow-md no-print">
+    <div class="max-w-5xl mx-auto px-4 py-3.5 flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-full bg-white text-[#0B4EA2] flex items-center justify-center font-black text-xl shadow border-2 border-[#C8102E]">
+          W
+        </div>
+        <div>
+          <div class="text-[11px] uppercase tracking-widest text-blue-200 font-semibold">Walton High School &bull; Engineering &amp; Technology</div>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight">Project 2.5: Sketch Planning Verification</h1>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="stemSampleBtn" type="button" class="text-xs bg-blue-800 hover:bg-blue-700 text-blue-100 px-3 py-1.5 rounded font-medium border border-blue-600 transition shadow-sm">
+          Load STEM Sample
+        </button>
+        <button id="nonStemSampleBtn" type="button" class="text-xs bg-blue-800 hover:bg-blue-700 text-blue-100 px-3 py-1.5 rounded font-medium border border-blue-600 transition shadow-sm">
+          Load Non-STEM Sample
+        </button>
+        <button id="resetBtn" type="button" class="text-xs bg-slate-700 hover:bg-slate-600 text-slate-200 px-3 py-1.5 rounded font-medium transition">
+          Reset
+        </button>
+        <button id="printBtn" type="button" class="text-xs bg-[#C8102E] hover:bg-red-700 text-white font-bold px-3.5 py-1.5 rounded shadow transition flex items-center space-x-1.5">
+          <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+          </svg>
+          <span>Print / Save as PDF</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl w-full mx-auto px-4 py-4 sm:py-6 flex-grow">
+    
+    <!-- Printable Header Banner (Only visible on Print) -->
+    <div class="print-only mb-2.5 pb-2 border-b-2 border-slate-800">
+      <div class="flex justify-between items-end">
+        <div>
+          <h1 class="text-base font-bold uppercase tracking-tight text-slate-900">Walton High School &bull; Engineering &amp; Technology</h1>
+          <h2 class="text-xs font-semibold text-slate-700">Project 2.5 Sketch Planning &amp; Pre-Approval Record</h2>
+        </div>
+        <div id="printTrackIndicator" class="text-right text-xs font-bold text-blue-900 uppercase">
+          STEM Track
+        </div>
+      </div>
+    </div>
+
+    <!-- Student Info & Class Period / STEM Card -->
+    <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-4 print-card">
+      <div class="grid grid-cols-1 sm:grid-cols-12 gap-3.5 items-center">
+        <!-- Student Name -->
+        <div class="sm:col-span-4">
+          <label for="studentName" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
+            Student Full Name <span class="text-red-600">*</span>
+          </label>
+          <input type="text" id="studentName" placeholder="e.g. Jordan Miller" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-[#0B4EA2] focus:border-[#0B4EA2] outline-none">
+        </div>
+        
+        <!-- Period Dropdown (1 to 5) -->
+        <div class="sm:col-span-2">
+          <label for="classPeriod" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
+            Period <span class="text-red-600">*</span>
+          </label>
+          <select id="classPeriod" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-[#0B4EA2] focus:border-[#0B4EA2] bg-white outline-none">
+            <option value="">Select</option>
+            <option value="Period 1">Period 1</option>
+            <option value="Period 2">Period 2</option>
+            <option value="Period 3">Period 3</option>
+            <option value="Period 4">Period 4</option>
+            <option value="Period 5">Period 5</option>
+          </select>
+        </div>
+
+        <!-- Date Input -->
+        <div class="sm:col-span-3">
+          <label for="planDate" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
+            Planning Date
+          </label>
+          <input type="date" id="planDate" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-[#0B4EA2] focus:border-[#0B4EA2] outline-none bg-white">
+        </div>
+
+        <!-- STEM Academy Checkbox & Track Indicator -->
+        <div class="sm:col-span-3 bg-slate-50 border border-slate-200 rounded-lg p-2 flex flex-col justify-center">
+          <label class="inline-flex items-center cursor-pointer select-none">
+            <input type="checkbox" id="stemCheckbox" class="w-4 h-4 text-[#0B4EA2] border-slate-300 rounded focus:ring-[#0B4EA2]" checked>
+            <span class="ml-2 text-xs font-bold text-slate-800">STEM Academy</span>
+          </label>
+          <div id="trackBadge" class="mt-0.5 text-[11px] font-bold text-blue-700 leading-tight">
+            Biology Object Required
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verification Status Banner -->
+    <section id="statusBanner" class="mb-4 rounded-xl border p-4 transition-all duration-200 print-card bg-rose-50 border-rose-300 text-rose-950">
+      <div class="flex items-start gap-3">
+        <div id="statusIconContainer" class="flex-shrink-0 w-10 h-10 rounded-full bg-[#C8102E] text-white flex items-center justify-center font-black text-2xl shadow-sm">
+          &times;
+        </div>
+        <div class="flex-1">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <h2 id="statusHeadline" class="text-sm sm:text-base font-extrabold tracking-tight text-rose-900">
+              &#10008; REQUIREMENTS INCOMPLETE OR INVALID
+            </h2>
+            <span id="statusBadge" class="inline-block text-[11px] font-bold uppercase px-2.5 py-0.5 rounded bg-rose-200 text-rose-900 tracking-wider">
+              Verification Failed
+            </span>
+          </div>
+          <p id="statusSubtext" class="text-xs sm:text-sm text-rose-800 mt-0.5">
+            Your sketch choices do not satisfy all project criteria. Review the errors and corrective recommendations below.
+          </p>
+
+          <!-- Error Details & Actionable Suggestions Container -->
+          <div id="errorDetailsBox" class="mt-2.5 pt-2.5 border-t border-rose-200 grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs">
+            <div class="bg-white/70 p-2.5 rounded border border-rose-200">
+              <span class="font-bold text-rose-950 uppercase tracking-wider text-[11px] block mb-1 flex items-center gap-1">
+                <span class="text-rose-600 font-bold">&#9888;</span> Where You Went Wrong:
+              </span>
+              <ul id="errorList" class="list-disc list-inside space-y-0.5 text-rose-800 font-medium">
+                <!-- Dynamically populated -->
+              </ul>
+            </div>
+            <div class="bg-white/70 p-2.5 rounded border border-rose-200">
+              <span class="font-bold text-rose-950 uppercase tracking-wider text-[11px] block mb-1 flex items-center gap-1">
+                <span class="text-blue-700 font-bold">&#8635;</span> What Changes You Should Make:
+              </span>
+              <ul id="fixList" class="list-disc list-inside space-y-0.5 text-rose-800 font-medium">
+                <!-- Dynamically populated -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Required Sketches Table -->
+    <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-4 print-card">
+      <div class="bg-slate-50 px-4 py-2 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+        <div>
+          <h3 class="font-bold text-slate-800 text-sm">Core Required Sketches (1 &ndash; 6)</h3>
+          <p class="text-xs text-slate-500">Select objects and styles complying with difficulty and perspective rules.</p>
+        </div>
+        <div class="text-xs text-slate-600 bg-white px-2 py-0.5 rounded border border-slate-200 font-mono-code font-semibold">
+          6 Sketches Total
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs sm:text-sm border-collapse">
+          <thead>
+            <tr class="bg-slate-100 text-slate-600 text-[11px] font-semibold uppercase tracking-wider border-b border-slate-200">
+              <th class="py-2 px-3 w-10 text-center">#</th>
+              <th class="py-2 px-3 w-52">Sketch Slot &amp; Style</th>
+              <th class="py-2 px-3">Selected Object &amp; Difficulty</th>
+              <th class="py-2 px-3 w-28 text-right">Rating</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-800">
+            
+            <!-- Sketch 1: Isometric 1 -->
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 font-bold text-center text-slate-400">1</td>
+              <td class="py-2 px-3">
+                <span class="font-bold text-slate-900 block text-xs">Isometric 1</span>
+                <span class="text-[11px] text-blue-700 font-semibold">Isometric (Fixed)</span>
+                <input type="hidden" id="style_1" value="isometric">
+              </td>
+              <td class="py-2 px-3">
+                <select id="obj_1" class="sketch-dropdown w-full px-2 py-1.5 border border-slate-300 rounded text-xs bg-white focus:ring-2 focus:ring-[#0B4EA2]">
+                  <!-- Populated by JS -->
+                </select>
+              </td>
+              <td class="py-2 px-3 text-right">
+                <span id="diff_tag_1" class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-slate-100 text-slate-500">Unselected</span>
+              </td>
+            </tr>
+
+            <!-- Sketch 2: Oblique 1 -->
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 font-bold text-center text-slate-400">2</td>
+              <td class="py-2 px-3">
+                <span class="font-bold text-slate-900 block text-xs">Oblique 1</span>
+                <span class="text-[11px] text-blue-700 font-semibold">Oblique (Fixed)</span>
+                <input type="hidden" id="style_2" value="oblique">
+              </td>
+              <td class="py-2 px-3">
+                <select id="obj_2" class="sketch-dropdown w-full px-2 py-1.5 border border-slate-300 rounded text-xs bg-white focus:ring-2 focus:ring-[#0B4EA2]">
+                  <!-- Populated by JS -->
+                </select>
+              </td>
+              <td class="py-2 px-3 text-right">
+                <span id="diff_tag_2" class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-slate-100 text-slate-500">Unselected</span>
+              </td>
+            </tr>
+
+            <!-- Sketch 3: Perspective 1-point -->
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 font-bold text-center text-slate-400">3</td>
+              <td class="py-2 px-3">
+                <span class="font-bold text-slate-900 block text-xs">Perspective 1-point</span>
+                <span class="text-[11px] text-blue-700 font-semibold">1-Pt Perspective (Fixed)</span>
+                <input type="hidden" id="style_3" value="perspective1">
+              </td>
+              <td class="py-2 px-3">
+                <select id="obj_3" class="sketch-dropdown w-full px-2 py-1.5 border border-slate-300 rounded text-xs bg-white focus:ring-2 focus:ring-[#0B4EA2]">
+                  <!-- Populated by JS -->
+                </select>
+              </td>
+              <td class="py-2 px-3 text-right">
+                <span id="diff_tag_3" class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-slate-100 text-slate-500">Unselected</span>
+              </td>
+            </tr>
+
+            <!-- Sketch 4: Perspective 2-point -->
+            <tr class="hover:bg-slate-50">
+              <td class="py-2 px-3 font-bold text-center text-slate-400">4</td>
+              <td class="py-2 px-3">
+                <span class="font-bold text-slate-900 block text-xs">Perspective 2-point</span>
+                <span class="text-[11px] text-blue-700 font-semibold">2-Pt Perspective (Fixed)</span>
+                <input type="hidden" id="style_4" value="perspective2">
+              </td>
+              <td class="py-2 px-3">
+                <select id="obj_4" class="sketch-dropdown w-full px-2 py-1.5 border border-slate-300 rounded text-xs bg-white focus:ring-2 focus:ring-[#0B4EA2]">
+                  <!-- Populated by JS -->
+                </select>
+              </td>
+              <td class="py-2 px-3 text-right">
+                <span id="diff_tag_4" class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-slate-100 text-slate-500">Unselected</span>
+              </td>
+            </tr>
+
+            <!-- Sketch 5: Selectable Style (Iso, Oblique, 1-Pt, 2-Pt, 3-Pt) + Numbered Object -->
+            <tr class="hover:bg-slate-50 bg-blue-50/20">
+              <td class="py-2 px-3 font-bold text-center text-slate-400">5</td>
+              <td class="py-2 px-3">
+                <span class="font-bold text-slate-900 block text-xs">Sketch 5</span>
+                <select id="style_5" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded text-xs bg-white font-medium focus:ring-1 focus:ring-[#0B4EA2]">
+                  <option value="">Select Style</option>
+                  <option value="isometric">Isometric</option>
+                  <option value="oblique">Oblique</option>
+                  <option value="perspective1">1-Pt Perspective</option>
+                  <option value="perspective2">2-Pt Perspective</option>
+                  <option value="perspective3">3-Pt Perspective</option>
+                </select>
+              </td>
+              <td class="py-2 px-3">
+                <select id="obj_5" class="sketch-dropdown w-full px-2 py-1.5 border border-slate-300 rounded text-xs bg-white focus:ring-2 focus:ring-[#0B4EA2]">
+                  <!-- Populated by JS -->
+                </select>
+              </td>
+              <td class="py-2 px-3 text-right">
+                <span id="diff_tag_5" class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-slate-100 text-slate-500">Unselected</span>
+              </td>
+            </tr>
+
+            <!-- Sketch 6: Selectable Style (Iso, Oblique, 1-Pt, 2-Pt, 3-Pt) + STEM Bio vs Non-STEM Interest -->
+            <tr class="hover:bg-slate-50 bg-amber-50/25">
+              <td class="py-2 px-3 font-bold text-center text-slate-400">6</td>
+              <td class="py-2 px-3">
+                <span class="font-bold text-slate-900 block text-xs">Sketch 6</span>
+                <select id="style_6" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded text-xs bg-white font-medium focus:ring-1 focus:ring-[#0B4EA2]">
+                  <option value="">Select Style</option>
+                  <option value="isometric">Isometric</option>
+                  <option value="oblique">Oblique</option>
+                  <option value="perspective1">1-Pt Perspective</option>
+                  <option value="perspective2">2-Pt Perspective</option>
+                  <option value="perspective3">3-Pt Perspective</option>
+                </select>
+              </td>
+              <td class="py-2 px-3">
+                <div>
+                  <label id="sketch6Label" for="sketch6Desc" class="block text-xs font-bold text-blue-900 mb-1">
+                    Biology-Related Object Description (STEM Academy)
+                  </label>
+                  <input type="text" id="sketch6Desc" placeholder="e.g. DNA Double Helix, Plant Cell, Compound Microscope" class="w-full px-2 py-1.5 border border-slate-300 rounded text-xs bg-white focus:ring-2 focus:ring-[#0B4EA2]">
+                </div>
+              </td>
+              <td class="py-2 px-3 text-right">
+                <span id="diff_tag_6" class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-purple-100 text-purple-800 border border-purple-200">Custom</span>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Extra Challenge Sketches (Optional) -->
+    <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-4 print-card">
+      <div class="bg-slate-50 px-4 py-1.5 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <h3 class="font-bold text-slate-800 text-xs flex items-center gap-1.5">
+            <span class="text-amber-500 font-bold">&#9733;</span>
+            Extra Challenge Sketches (Optional)
+          </h3>
+        </div>
+        <span class="text-[10px] bg-slate-200 text-slate-700 font-semibold px-2 py-0.5 rounded">
+          Challenge Objects 1&ndash;8
+        </span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse">
+          <tbody class="divide-y divide-slate-200 text-slate-800">
+            <!-- Extra Sketch 1 -->
+            <tr class="hover:bg-slate-50">
+              <td class="py-1.5 px-3 w-10 font-bold text-center text-amber-600">E1</td>
+              <td class="py-1.5 px-3 w-52">
+                <span class="font-bold text-slate-700 block text-xs">Extra Sketch 1</span>
+                <select id="extra_style_1" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded text-xs bg-white font-medium">
+                  <option value="">None / Not attempted</option>
+                  <option value="isometric">Isometric</option>
+                  <option value="oblique">Oblique</option>
+                  <option value="perspective1">1-Pt Perspective</option>
+                  <option value="perspective2">2-Pt Perspective</option>
+                  <option value="perspective3">3-Pt Perspective</option>
+                </select>
+              </td>
+              <td class="py-1.5 px-3">
+                <select id="extra_obj_1" class="w-full px-2 py-1 border border-slate-300 rounded text-xs bg-white focus:ring-1 focus:ring-[#0B4EA2]">
+                  <option value="">Select Optional Challenge Object</option>
+                  <option value="ch-1">Challenge Object 1 (Tiered Block with Hole)</option>
+                  <option value="ch-2">Challenge Object 2 (Curved Cutout Guide)</option>
+                  <option value="ch-3">Challenge Object 3 (Slotted Angled Block)</option>
+                  <option value="ch-4">Challenge Object 4 (Multi-Level Notch)</option>
+                  <option value="ch-5">Challenge Object 5 (Stepped Cantilever)</option>
+                  <option value="ch-6">Challenge Object 6 (Flanged Bracket with Holes)</option>
+                  <option value="ch-7">Challenge Object 7 (Wedge Multiview)</option>
+                  <option value="ch-8">Challenge Object 8 (Bracket Multiview)</option>
+                  <option value="custom">Other Challenge Object (Describe below)</option>
+                </select>
+                <div id="extra_custom_wrap" class="mt-1 hidden">
+                  <input type="text" id="extra_custom_desc" placeholder="Describe the challenge object..." class="w-full px-2 py-1 text-xs border border-amber-300 rounded bg-amber-50">
+                </div>
+              </td>
+              <td class="py-1.5 px-3 text-right w-28">
+                <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-amber-100 text-amber-800">Challenge</span>
+              </td>
+            </tr>
+
+            <!-- Extra Sketch 2 -->
+            <tr class="hover:bg-slate-50">
+              <td class="py-1.5 px-3 w-10 font-bold text-center text-amber-600">E2</td>
+              <td class="py-1.5 px-3 w-52">
+                <span class="font-bold text-slate-700 block text-xs">Extra Sketch 2</span>
+                <select id="extra_style_2" class="w-full mt-0.5 px-2 py-1 border border-slate-300 rounded text-xs bg-white font-medium">
+                  <option value="">None / Not attempted</option>
+                  <option value="isometric">Isometric</option>
+                  <option value="oblique">Oblique</option>
+                  <option value="perspective1">1-Pt Perspective</option>
+                  <option value="perspective2">2-Pt Perspective</option>
+                  <option value="perspective3">3-Pt Perspective</option>
+                </select>
+              </td>
+              <td class="py-1.5 px-3">
+                <select id="extra_obj_2" class="w-full px-2 py-1 border border-slate-300 rounded text-xs bg-white focus:ring-1 focus:ring-[#0B4EA2]">
+                  <option value="">Select Optional Challenge Object</option>
+                  <option value="ch-1">Challenge Object 1 (Tiered Block with Hole)</option>
+                  <option value="ch-2">Challenge Object 2 (Curved Cutout Guide)</option>
+                  <option value="ch-3">Challenge Object 3 (Slotted Angled Block)</option>
+                  <option value="ch-4">Challenge Object 4 (Multi-Level Notch)</option>
+                  <option value="ch-5">Challenge Object 5 (Stepped Cantilever)</option>
+                  <option value="ch-6">Challenge Object 6 (Flanged Bracket with Holes)</option>
+                  <option value="ch-7">Challenge Object 7 (Wedge Multiview)</option>
+                  <option value="ch-8">Challenge Object 8 (Bracket Multiview)</option>
+                </select>
+              </td>
+              <td class="py-1.5 px-3 text-right w-28">
+                <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-amber-100 text-amber-800">Challenge</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Live Requirements Checklist -->
+    <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-4 print-card">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-2 mb-2.5">
+        <div>
+          <h3 class="font-bold text-slate-800 text-xs uppercase tracking-wider">Project 2.5 Live Requirements Checklist</h3>
+        </div>
+        <div id="checklistScore" class="text-xs font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700">
+          0 / 9 Satisfied
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+        
+        <!-- Req 1: Student info -->
+        <div id="chk_info" class="flex items-center space-x-2 p-1.5 rounded bg-slate-50 border border-slate-200">
+          <span class="chk-icon flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] bg-slate-300 text-slate-600">&times;</span>
+          <span class="text-slate-700">Student Name &amp; Class Period (1&ndash;5) entered</span>
+        </div>
+
+        <!-- Req 2: Isometric -->
+        <div id="chk_iso" class="flex items-center space-x-2 p-1.5 rounded bg-slate-50 border border-slate-200">
+          <span class="chk-icon flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] bg-slate-300 text-slate-600">&times;</span>
+          <span class="text-slate-700">At least 1 sketch using <strong>Isometric</strong> style</span>
+        </div>
+
+        <!-- Req 3: Oblique -->
+        <div id="chk_oblique" class="flex items-center space-x-2 p-1.5 rounded bg-slate-50 border border-slate-200">
+          <span class="chk-icon flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] bg-slate-300 text-slate-600">&times;</span>
+          <span class="text-slate-700">At least 1 sketch using <strong>Oblique</strong> style</span>
+        </div>
+
+        <!-- Req 4: 1-point -->
+        <div id="chk_p1" class="flex items-center space-x-2 p-1.5 rounded bg-slate-50 border border-slate-200">
+          <span class="chk-icon flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] bg-slate-300 text-slate-600">&times;</span>
+          <span class="text-slate-700">At least 1 sketch using <strong>1-Point Perspective</strong></span>
+        </div>
+
+        <!-- Req 5: 2-point -->
+        <div id="chk_p2" class="flex items-center space-x-2 p-1.5 rounded bg-slate-50 border border-slate-200">
+          <span class="chk-icon flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] bg-slate-300 text-slate-600">&times;</span>
+          <span class="text-slate-700">At least 1 sketch using <strong>2-Point Perspective</strong></span>
+        </div>
+
+        <!-- Req 6: 2 Medium Objects -->
+        <div id="chk_med" class="flex items-center space-x-2 p-1.5 rounded bg-slate-50 border border-slate-200">
+          <span class="chk-icon flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] bg-slate-300 text-slate-600">&times;</span>
+          <span class="text-slate-700">At least <strong>2 Medium objects</strong> (Object 2, 3, 4, 6)</span>
+        </div>
+
+        <!-- Req 7: 1 Hard Object -->
+        <div id="chk_hard" class="flex items-center space-x-2 p-1.5 rounded bg-slate-50 border border-slate-200">
+          <span class="chk-icon flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] bg-slate-300 text-slate-600">&times;</span>
+          <span class="text-slate-700">At least <strong>1 Hard object</strong> (Object 7, 8, 10)</span>
+        </div>
+
+        <!-- Req 8: Track Custom Item (Bio or Interest) -->
+        <div id="chk_custom" class="flex items-center space-x-2 p-1.5 rounded bg-slate-50 border border-slate-200">
+          <span class="chk-icon flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] bg-slate-300 text-slate-600">&times;</span>
+          <span id="chkCustomLabel" class="text-slate-700">1 <strong>Biology-related</strong> item described (STEM Academy)</span>
+        </div>
+
+        <!-- Req 9: No Duplicates & Complete Selection -->
+        <div id="chk_dupes" class="flex items-center space-x-2 p-1.5 rounded bg-slate-50 border border-slate-200 md:col-span-2">
+          <span class="chk-icon flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] bg-slate-300 text-slate-600">&times;</span>
+          <span class="text-slate-700">No duplicate numbered objects selected &amp; all styles chosen</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Object Catalog & Difficulty Reference Guide -->
+    <details class="bg-white rounded-xl shadow-sm border border-slate-200 p-3.5 no-print">
+      <summary class="font-bold text-slate-700 cursor-pointer hover:text-[#0B4EA2] transition flex items-center justify-between text-xs sm:text-sm">
+        <span>Object Catalog &amp; Difficulty Reference Guide</span>
+        <span class="text-xs text-blue-600 font-normal underline">Click to expand</span>
+      </summary>
+      <div class="mt-2.5 pt-2.5 border-t border-slate-200 text-xs grid grid-cols-1 md:grid-cols-3 gap-2.5">
+        <div class="bg-slate-50 p-2.5 rounded border border-slate-200">
+          <h4 class="font-bold text-slate-800 uppercase tracking-wide text-[11px] mb-1">Easy Objects (Page 1)</h4>
+          <ul class="space-y-0.5 text-slate-600">
+            <li>&bull; Object 1: Step notched block</li>
+            <li>&bull; Object 5: Slotted cantilever step</li>
+            <li>&bull; Object 9: Inverted V-cut block</li>
+            <li>&bull; Object 11: Chamfered angled block</li>
+          </ul>
+        </div>
+        <div class="bg-blue-50/60 p-2.5 rounded border border-blue-200">
+          <h4 class="font-bold text-blue-900 uppercase tracking-wide text-[11px] mb-1">Medium Objects (Min 2 req)</h4>
+          <ul class="space-y-0.5 text-blue-900">
+            <li>&bull; Object 2: Curved arch with diamond cut</li>
+            <li>&bull; Object 3: Slotted bracket with holes</li>
+            <li>&bull; Object 4: S-curve bracket with through hole</li>
+            <li>&bull; Object 6: Cylinder saddle groove block</li>
+          </ul>
+        </div>
+        <div class="bg-rose-50/60 p-2.5 rounded border border-rose-200">
+          <h4 class="font-bold text-rose-900 uppercase tracking-wide text-[11px] mb-1">Hard Objects (Min 1 req)</h4>
+          <ul class="space-y-0.5 text-rose-900">
+            <li>&bull; Object 7: Dual curvilinear rocker</li>
+            <li>&bull; Object 8: Compound curve bracket</li>
+            <li>&bull; Object 10: Pivot arm with cylindrical bosses</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-2 text-[11px] text-slate-500">
+        Challenge Objects (Page 2): Objects 1&ndash;6, Object 7 (Wedge Multiview), Object 8 (Bracket Multiview).
+      </div>
+    </details>
+
+  </main>
+
+  <footer class="bg-slate-800 text-slate-400 text-xs py-3 px-4 border-t border-slate-700 text-center no-print">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1">
+      <div>Walton High School Engineering &bull; PLTW Intro to Engineering Design</div>
+      <div>Project 2.5 Sketch Planning Verification System</div>
+    </div>
+  </footer>
+
+  <script>
+    // Object Catalog Data
+    const NUMBERED_OBJECTS = [
+      { id: '', text: '-- Choose Numbered Object --', diff: null, num: null },
+      { id: '1', text: 'Object 1 (Easy)', diff: 'Easy', num: 1 },
+      { id: '2', text: 'Object 2 (Medium)', diff: 'Medium', num: 2 },
+      { id: '3', text: 'Object 3 (Medium)', diff: 'Medium', num: 3 },
+      { id: '4', text: 'Object 4 (Medium)', diff: 'Medium', num: 4 },
+      { id: '5', text: 'Object 5 (Easy)', diff: 'Easy', num: 5 },
+      { id: '6', text: 'Object 6 (Medium)', diff: 'Medium', num: 6 },
+      { id: '7', text: 'Object 7 (Hard)', diff: 'Hard', num: 7 },
+      { id: '8', text: 'Object 8 (Hard)', diff: 'Hard', num: 8 },
+      { id: '9', text: 'Object 9 (Easy)', diff: 'Easy', num: 9 },
+      { id: '10', text: 'Object 10 (Hard)', diff: 'Hard', num: 10 },
+      { id: '11', text: 'Object 11 (Easy)', diff: 'Easy', num: 11 }
+    ];
+
+    // Populate numbered object dropdowns for slots 1-5
+    function populateDropdowns() {
+      for (let i = 1; i <= 5; i++) {
+        const select = document.getElementById(`obj_${i}`);
+        if (!select) continue;
+        select.innerHTML = '';
+        NUMBERED_OBJECTS.forEach(obj => {
+          const opt = document.createElement('option');
+          opt.value = obj.id;
+          opt.textContent = obj.text;
+          select.appendChild(opt);
+        });
+      }
+    }
+
+    // Set today's date if not already populated
+    function initDefaultDate() {
+      const dateEl = document.getElementById('planDate');
+      if (dateEl && !dateEl.value) {
+        dateEl.value = new Date().toISOString().split('T')[0];
+      }
+    }
+
+    function validatePlan() {
+      const studentName = document.getElementById('studentName').value.trim();
+      const classPeriod = document.getElementById('classPeriod').value;
+      const isSTEM = document.getElementById('stemCheckbox').checked;
+
+      // Update Track UI
+      const trackBadge = document.getElementById('trackBadge');
+      const printTrackIndicator = document.getElementById('printTrackIndicator');
+      const sketch6Label = document.getElementById('sketch6Label');
+      const sketch6Input = document.getElementById('sketch6Desc');
+      const chkCustomLabel = document.getElementById('chkCustomLabel');
+
+      if (isSTEM) {
+        trackBadge.textContent = 'STEM Academy Track (Requires Biology Object)';
+        trackBadge.className = 'mt-0.5 text-[11px] font-bold text-blue-700 leading-tight';
+        printTrackIndicator.textContent = 'STEM Academy Track (Biology Object)';
+        sketch6Label.textContent = 'Biology-Related Object Description (STEM Academy)';
+        sketch6Input.placeholder = 'e.g. DNA Double Helix, Plant Cell, Compound Microscope';
+        chkCustomLabel.innerHTML = '1 <strong>Biology-related</strong> item described (STEM Academy)';
+      } else {
+        trackBadge.textContent = 'General Engineering Track (Requires Personal Interest Object)';
+        trackBadge.className = 'mt-0.5 text-[11px] font-bold text-slate-700 leading-tight';
+        printTrackIndicator.textContent = 'General Engineering Track (Personal Interest)';
+        sketch6Label.textContent = 'Personal Interest Object Description';
+        sketch6Input.placeholder = 'e.g. Acoustic Guitar, Baseball Glove, Drone Quadcopter';
+        chkCustomLabel.innerHTML = '1 <strong>Personal Interest</strong> item described (General Track)';
+      }
+
+      // Read Slots 1-5 Numbered Objects
+      const slotObjects = [];
+      const styles = [];
+
+      // Slot 1 (Isometric locked)
+      styles.push('isometric');
+      slotObjects.push(document.getElementById('obj_1').value);
+
+      // Slot 2 (Oblique locked)
+      styles.push('oblique');
+      slotObjects.push(document.getElementById('obj_2').value);
+
+      // Slot 3 (1-Point locked)
+      styles.push('perspective1');
+      slotObjects.push(document.getElementById('obj_3').value);
+
+      // Slot 4 (2-Point locked)
+      styles.push('perspective2');
+      slotObjects.push(document.getElementById('obj_4').value);
+
+      // Slot 5 (Style + Object)
+      const style5 = document.getElementById('style_5').value;
+      if (style5) styles.push(style5);
+      slotObjects.push(document.getElementById('obj_5').value);
+
+      // Slot 6 (Style + Description)
+      const style6 = document.getElementById('style_6').value;
+      if (style6) styles.push(style6);
+      const sketch6Desc = sketch6Input.value.trim();
+
+      // Update Difficulty badges for Slots 1-5
+      for (let i = 1; i <= 5; i++) {
+        const val = document.getElementById(`obj_${i}`).value;
+        const tag = document.getElementById(`diff_tag_${i}`);
+        const meta = NUMBERED_OBJECTS.find(o => o.id === val);
+        if (meta && meta.diff) {
+          tag.textContent = meta.diff;
+          if (meta.diff === 'Hard') {
+            tag.className = 'inline-block px-2 py-0.5 text-xs font-semibold rounded bg-rose-100 text-rose-800 border border-rose-200';
+          } else if (meta.diff === 'Medium') {
+            tag.className = 'inline-block px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-800 border border-blue-200';
+          } else {
+            tag.className = 'inline-block px-2 py-0.5 text-xs font-semibold rounded bg-emerald-100 text-emerald-800 border border-emerald-200';
+          }
+        } else {
+          tag.textContent = 'Unselected';
+          tag.className = 'inline-block px-2 py-0.5 text-xs font-semibold rounded bg-slate-100 text-slate-500';
+        }
+      }
+
+      // Check optional challenge sketch 1 custom wrap
+      const extra1Val = document.getElementById('extra_obj_1').value;
+      const extraCustomWrap = document.getElementById('extra_custom_wrap');
+      if (extra1Val === 'custom') {
+        extraCustomWrap.classList.remove('hidden');
+      } else {
+        extraCustomWrap.classList.add('hidden');
+      }
+
+      // Rule Metrics
+      const isoCount = styles.filter(s => s === 'isometric').length;
+      const obliqueCount = styles.filter(s => s === 'oblique').length;
+      const p1Count = styles.filter(s => s === 'perspective1').length;
+      const p2Count = styles.filter(s => s === 'perspective2').length;
+
+      let medCount = 0;
+      let hardCount = 0;
+      const selectedNumbers = [];
+      const duplicates = [];
+
+      slotObjects.forEach(objId => {
+        if (objId) {
+          const meta = NUMBERED_OBJECTS.find(o => o.id === objId);
+          if (meta) {
+            if (meta.diff === 'Medium') medCount++;
+            if (meta.diff === 'Hard') hardCount++;
+            if (selectedNumbers.includes(meta.num)) {
+              duplicates.push(`Object ${meta.num}`);
+            } else {
+              selectedNumbers.push(meta.num);
+            }
+          }
+        }
+      });
+
+      // Individual Checks
+      const checkInfo = studentName.length > 0 && classPeriod.length > 0;
+      const checkIso = isoCount >= 1;
+      const checkOblique = obliqueCount >= 1;
+      const checkP1 = p1Count >= 1;
+      const checkP2 = p2Count >= 1;
+      const checkMed = medCount >= 2;
+      const checkHard = hardCount >= 1;
+      const checkCustom = sketch6Desc.length > 0;
+      const checkDupes = duplicates.length === 0 && slotObjects.filter(Boolean).length === 5 && style5 !== '' && style6 !== '';
+
+      updateChecklistItem('chk_info', checkInfo);
+      updateChecklistItem('chk_iso', checkIso);
+      updateChecklistItem('chk_oblique', checkOblique);
+      updateChecklistItem('chk_p1', checkP1);
+      updateChecklistItem('chk_p2', checkP2);
+      updateChecklistItem('chk_med', checkMed);
+      updateChecklistItem('chk_hard', checkHard);
+      updateChecklistItem('chk_custom', checkCustom);
+      updateChecklistItem('chk_dupes', checkDupes);
+
+      const allChecks = [checkInfo, checkIso, checkOblique, checkP1, checkP2, checkMed, checkHard, checkCustom, checkDupes];
+      const passedCount = allChecks.filter(Boolean).length;
+      document.getElementById('checklistScore').textContent = `${passedCount} / 9 Satisfied`;
+
+      const errors = [];
+      const fixes = [];
+
+      if (!studentName) {
+        errors.push('Student Full Name is missing.');
+        fixes.push('Type your full name in the top input field.');
+      }
+      if (!classPeriod) {
+        errors.push('Class Period is not selected.');
+        fixes.push('Select your engineering class period (1 to 5) from the dropdown.');
+      }
+      if (slotObjects.filter(Boolean).length < 5) {
+        const missingSlots = [];
+        for (let i = 1; i <= 5; i++) {
+          if (!document.getElementById(`obj_${i}`).value) missingSlots.push(`Sketch ${i}`);
+        }
+        errors.push(`Unselected numbered objects: ${missingSlots.join(', ')}.`);
+        fixes.push('Pick an object from Page 1 (Objects 1&ndash;11) for each core sketch 1 through 5.');
+      }
+      if (!style5) {
+        errors.push('Sketch 5 style is not selected.');
+        fixes.push('Choose a drawing style (Isometric, Oblique, 1-Pt, 2-Pt, or 3-Pt) for Sketch 5.');
+      }
+      if (!style6) {
+        errors.push('Sketch 6 style is not selected.');
+        fixes.push('Choose a drawing style (Isometric, Oblique, 1-Pt, 2-Pt, or 3-Pt) for Sketch 6.');
+      }
+      if (medCount < 2) {
+        const deficit = 2 - medCount;
+        errors.push(`Need at least 2 Medium objects (currently selected: ${medCount}).`);
+        fixes.push(`Select ${deficit} more Medium object(s) from Objects 2, 3, 4, or 6 in slots 1&ndash;5.`);
+      }
+      if (hardCount < 1) {
+        errors.push('Need at least 1 Hard object (currently selected: 0).');
+        fixes.push('Select at least one Hard object (Object 7, Object 8, or Object 10) in slots 1&ndash;5.');
+      }
+      if (!checkCustom) {
+        if (isSTEM) {
+          errors.push('Biology-related object description is blank (STEM Academy requirement).');
+          fixes.push('Describe a biology-related item to sketch for Sketch 6 (e.g., DNA model, microscope, chloroplast).');
+        } else {
+          errors.push('Personal interest object description is blank (General Engineering requirement).');
+          fixes.push('Describe an item displaying your personal interests for Sketch 6 (e.g., guitar, skateboard, camera).');
+        }
+      }
+      if (duplicates.length > 0) {
+        errors.push(`Duplicate object selections found: ${[...new Set(duplicates)].join(', ')}.`);
+        fixes.push('Each numbered object can only be sketched once. Replace duplicate choices with different objects.');
+      }
+
+      // Update Banner UI
+      const banner = document.getElementById('statusBanner');
+      const icon = document.getElementById('statusIconContainer');
+      const headline = document.getElementById('statusHeadline');
+      const badge = document.getElementById('statusBadge');
+      const subtext = document.getElementById('statusSubtext');
+      const errorBox = document.getElementById('errorDetailsBox');
+      const errorList = document.getElementById('errorList');
+      const fixList = document.getElementById('fixList');
+
+      const isAllValid = allChecks.every(Boolean);
+
+      if (isAllValid) {
+        banner.className = 'mb-4 rounded-xl border p-4 transition-all duration-200 print-card bg-emerald-50 border-emerald-300 text-emerald-950';
+        icon.className = 'flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-2xl shadow-sm';
+        icon.innerHTML = '&#10004;';
+        headline.className = 'text-sm sm:text-base font-extrabold tracking-tight text-emerald-900';
+        headline.textContent = '✔ ALL REQUIREMENTS SATISFIED (APPROVED PLAN)';
+        badge.className = 'inline-block text-[11px] font-bold uppercase px-2.5 py-0.5 rounded bg-emerald-200 text-emerald-900 tracking-wider';
+        badge.textContent = 'Plan Approved';
+        subtext.className = 'text-xs sm:text-sm text-emerald-800 mt-0.5';
+        subtext.innerHTML = 'Great job! Your sketch selection complies with all Project 2.5 requirements. You can now print this sheet to include with your final sketches.';
+        errorBox.classList.add('hidden');
+      } else {
+        banner.className = 'mb-4 rounded-xl border p-4 transition-all duration-200 print-card bg-rose-50 border-rose-300 text-rose-950';
+        icon.className = 'flex-shrink-0 w-10 h-10 rounded-full bg-[#C8102E] text-white flex items-center justify-center font-black text-2xl shadow-sm';
+        icon.innerHTML = '&times;';
+        headline.className = 'text-sm sm:text-base font-extrabold tracking-tight text-rose-900';
+        headline.textContent = '✖ REQUIREMENTS INCOMPLETE OR INVALID';
+        badge.className = 'inline-block text-[11px] font-bold uppercase px-2.5 py-0.5 rounded bg-rose-200 text-rose-900 tracking-wider';
+        badge.textContent = 'Action Required';
+        subtext.className = 'text-xs sm:text-sm text-rose-800 mt-0.5';
+        subtext.textContent = 'Your sketch choices do not satisfy all project criteria. Review the errors and corrective recommendations below.';
+        
+        errorBox.classList.remove('hidden');
+        errorList.innerHTML = '';
+        errors.forEach(err => {
+          const li = document.createElement('li');
+          li.innerHTML = err;
+          errorList.appendChild(li);
+        });
+
+        fixList.innerHTML = '';
+        fixes.forEach(fix => {
+          const li = document.createElement('li');
+          li.innerHTML = fix;
+          fixList.appendChild(li);
+        });
+      }
+    }
+
+    // Helper for updating checklist pill colors
+    function updateChecklistItem(elementId, isPassed) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      const icon = el.querySelector('.chk-icon');
+      if (isPassed) {
+        el.className = 'flex items-center space-x-2 p-1.5 rounded bg-emerald-50 border border-emerald-300 transition-colors';
+        icon.className = 'chk-icon flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] bg-emerald-600 text-white';
+        icon.innerHTML = '&#10004;';
+      } else {
+        el.className = 'flex items-center space-x-2 p-1.5 rounded bg-slate-50 border border-slate-200 transition-colors';
+        icon.className = 'chk-icon flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] bg-[#C8102E] text-white';
+        icon.innerHTML = '&times;';
+      }
+    }
+
+    function setupInteractions() {
+      const inputs = [
+        '#studentName', '#classPeriod', '#planDate', '#stemCheckbox',
+        '#obj_1', '#obj_2', '#obj_3', '#obj_4', '#obj_5',
+        '#style_5', '#style_6', '#sketch6Desc',
+        '#extra_style_1', '#extra_obj_1', '#extra_custom_desc',
+        '#extra_style_2', '#extra_obj_2'
+      ];
+
+      inputs.forEach(sel => {
+        const el = document.querySelector(sel);
+        if (el) {
+          el.addEventListener('input', validatePlan);
+          el.addEventListener('change', validatePlan);
+        }
+      });
+
+      // Load Valid STEM Sample (demonstrating 3-Point Perspective on Sketch 5)
+      document.getElementById('stemSampleBtn').addEventListener('click', () => {
+        document.getElementById('studentName').value = 'Taylor Evans';
+        document.getElementById('classPeriod').value = 'Period 2';
+        document.getElementById('stemCheckbox').checked = true;
+        
+        // Slot 1: Isometric -> Object 2 (Medium)
+        document.getElementById('obj_1').value = '2';
+        // Slot 2: Oblique -> Object 4 (Medium)
+        document.getElementById('obj_2').value = '4';
+        // Slot 3: Perspective 1-point -> Object 7 (Hard)
+        document.getElementById('obj_3').value = '7';
+        // Slot 4: Perspective 2-point -> Object 1 (Easy)
+        document.getElementById('obj_4').value = '1';
+        // Slot 5: 3-Point Perspective -> Object 8 (Hard)
+        document.getElementById('style_5').value = 'perspective3';
+        document.getElementById('obj_5').value = '8';
+        // Slot 6: Style 1-point -> Biology Object
+        document.getElementById('style_6').value = 'perspective1';
+        document.getElementById('sketch6Desc').value = 'Compound Optical Microscope & Slide Stage';
+
+        validatePlan();
+      });
+
+      // Load Valid Non-STEM Sample (demonstrating 3-Point Perspective on Sketch 6)
+      document.getElementById('nonStemSampleBtn').addEventListener('click', () => {
+        document.getElementById('studentName').value = 'Morgan Bennett';
+        document.getElementById('classPeriod').value = 'Period 4';
+        document.getElementById('stemCheckbox').checked = false;
+        
+        // Slot 1: Isometric -> Object 3 (Medium)
+        document.getElementById('obj_1').value = '3';
+        // Slot 2: Oblique -> Object 6 (Medium)
+        document.getElementById('obj_2').value = '6';
+        // Slot 3: Perspective 1-point -> Object 10 (Hard)
+        document.getElementById('obj_3').value = '10';
+        // Slot 4: Perspective 2-point -> Object 5 (Easy)
+        document.getElementById('obj_4').value = '5';
+        // Slot 5: Style Oblique -> Object 9 (Easy)
+        document.getElementById('style_5').value = 'oblique';
+        document.getElementById('obj_5').value = '9';
+        // Slot 6: 3-Point Perspective -> Personal Interest Object
+        document.getElementById('style_6').value = 'perspective3';
+        document.getElementById('sketch6Desc').value = 'Solid-Body Electric Guitar with Volume Dials';
+
+        validatePlan();
+      });
+
+      // Reset
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        document.getElementById('studentName').value = '';
+        document.getElementById('classPeriod').value = '';
+        for (let i = 1; i <= 5; i++) {
+          const el = document.getElementById(`obj_${i}`);
+          if (el) el.value = '';
+        }
+        document.getElementById('style_5').value = '';
+        document.getElementById('style_6').value = '';
+        document.getElementById('sketch6Desc').value = '';
+        document.getElementById('extra_style_1').value = '';
+        document.getElementById('extra_obj_1').value = '';
+        document.getElementById('extra_style_2').value = '';
+        document.getElementById('extra_obj_2').value = '';
+        validatePlan();
+      });
+
+      // Print / PDF Button
+      document.getElementById('printBtn').addEventListener('click', () => {
+        window.print();
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      populateDropdowns();
+      initDefaultDate();
+      setupInteractions();
+      validatePlan();
+    });
+  </script>
+</body>
+</html>
