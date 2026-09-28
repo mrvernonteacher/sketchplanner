@@ -442,7 +442,7 @@
         padding: 0 !important;
       }
 
-      /* HIDE page 2 elements, buttons, and references */
+      /* HIDE page 2 elements, checklist, buttons, and references */
       .checklist-section,
       .diagnostic-panel,
       .action-bar,
@@ -607,7 +607,7 @@
       </div>
     </div>
 
-    <!-- Core Sketches Table (Primary 1-Page Printable Section) -->
+    <!-- Core Sketches Table (Primary 1-Page Printable Section)[cite: 1] -->
     <table class="planning-table">
       <thead>
         <tr>
@@ -713,7 +713,7 @@
       </tbody>
     </table>
 
-    <!-- Project 2.5 Checklist (Screen-only, Hidden on Print) -->
+    <!-- Project 2.5 Checklist (Screen-only, Hidden on Print)[cite: 1] -->
     <div class="checklist-section">
       <div class="checklist-title">Interactive Verification Checklist</div>
       <div class="checklist-grid">
@@ -778,6 +778,26 @@
     { id: 9, difficulty: 'Easy' },
     { id: 10, difficulty: 'Hard' },
     { id: 11, difficulty: 'Easy' }
+  ];
+
+  // Easter Egg Sci-Fi & Fantasy Character Roster
+  const EASTER_EGG_CHARACTERS = [
+    "Princess Donut the Queen Anne Chonk",
+    "Krombopulous Michael",
+    "Artu Ditoo",
+    "See Threepio",
+    "Mister Spahk",
+    "Paul Atreadeez",
+    "Jean-Luc Pickcard",
+    "Gandoff the Grae",
+    "Boba Fatt",
+    "Philip J. Fry-Guy",
+    "Chew-Barker",
+    "Doctor Hoo",
+    "Marty McFlyguy",
+    "Arthur Dent-In-The-Car",
+    "Lord Vayder",
+    "Buffy Summersault"
   ];
 
   const objSelectors = [
@@ -967,23 +987,30 @@
     }
   }
 
+  // Sample Loader with Sci-Fi / Fantasy Character Easter Egg
   function loadPreset(isStem) {
     stemCheckbox.checked = isStem;
-    studentNameInput.value = "Ty Vernon";
-    classPeriodInput.value = "2";
     
-    document.getElementById('sketch1').value = "1"; 
-    document.getElementById('sketch2').value = "2"; 
-    document.getElementById('sketch3').value = "3"; 
-    document.getElementById('sketch4').value = "7"; 
-    document.getElementById('sketch5').value = "9"; 
+    // Pick a random funny character name from the roster
+    const randomCharacter = EASTER_EGG_CHARACTERS[Math.floor(Math.random() * EASTER_EGG_CHARACTERS.length)];
+    studentNameInput.value = randomCharacter;
+    
+    // Pick a random class period (1-5)
+    classPeriodInput.value = String(Math.floor(Math.random() * 5) + 1);
+    
+    // Valid combination satisfying: 2 Mediums (Objects 2, 3), 1 Hard (Object 7)[cite: 2]
+    document.getElementById('sketch1').value = "1"; // Easy
+    document.getElementById('sketch2').value = "2"; // Medium
+    document.getElementById('sketch3').value = "3"; // Medium
+    document.getElementById('sketch4').value = "7"; // Hard
+    document.getElementById('sketch5').value = "9"; // Easy
     document.getElementById('sketch5Style').value = "perspective3";
     
     document.getElementById('sketch6Style').value = "isometric";
     if (isStem) {
-      sketch6Desc.value = "Compound Light Microscope with adjustable focus dials";
+      sketch6Desc.value = "Compound Light Microscope with dual coarse/fine adjustments";
     } else {
-      sketch6Desc.value = "Fender Stratocaster Electric Guitar with volume knobs";
+      sketch6Desc.value = "Fender Stratocaster Electric Guitar with triple pickups";
     }
     
     updateStemMode();
